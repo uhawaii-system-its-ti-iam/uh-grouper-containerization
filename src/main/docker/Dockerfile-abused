@@ -1,0 +1,6 @@
+FROM scalding/grouper-base:2.5.22
+
+COPY container-files/grouper.hibernate.properties /opt/grouper/grouperWebapp/WEB-INF/classes
+COPY container-files/morphString.base.properties /opt/grouper/grouperWebapp/WEB-INF/classes
+COPY container-files/morphString.properties /opt/grouper/grouperWebapp/WEB-INF/classes
+COPY container-files/log4j.properties /opt/grouper/grouperWebapp/WEB-INF/classes

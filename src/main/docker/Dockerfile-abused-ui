@@ -1,0 +1,7 @@
+FROM i2incommon/grouper:2.5.22 as install
+FROM scalding/grouper-abused:2.5.22
+
+COPY --from=install /opt/tomee /opt/tomee
+
+RUN cp /opt/grouper/grouperWebapp/WEB-INF/libUiAndDaemon/* /opt/grouper/grouperWebapp/WEB-INF/lib \
+ && rm /opt/tomee/bin/setenv.sh
