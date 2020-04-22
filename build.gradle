@@ -46,12 +46,12 @@ task createDockerImage {
     group = 'scalding'
     dependsOn 'jar'
     doLast {
-        Jib.from('docker://scalding/grouper-abused-ui:2.5.22')
+        Jib.from('docker://scalding/grouper-custom-ui:2.5.22')
             .addLayer(tasks.getByName('jar').outputs.files.collect { it.toPath() }, '/opt/grouper/grouperWebapp/WEB-INF/lib')
             .addLayer(configurations.runtime.files.collect { it.toPath() }, '/opt/grouper/grouperWebapp/WEB-INF/lib')
             .addLayer([file('/src/main/docker/container-files/javax.servlet.ServletContainerInitializer').toPath()], '/opt/grouper/grouperWebapp/WEB-INF/classes/META-INF/services')
             .setWorkingDirectory(AbsoluteUnixPath.get('/opt/grouper/grouperWebapp/WEB-INF/bin'))
             .setEntrypoint('/opt/tomee/bin/catalina.sh', 'run')
-            .containerize(Containerizer.to(DockerDaemonImage.named('scalding/grouper-abused-ui-pac4j')))
+            .containerize(Containerizer.to(DockerDaemonImage.named('scalding/grouper-custom-ui-pac4j')))
     }
 }
