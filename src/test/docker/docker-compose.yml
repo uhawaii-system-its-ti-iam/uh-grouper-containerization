@@ -12,7 +12,8 @@ services:
     ports:
       - "3306:3306"
   init:
-    image: scalding/grouper-abused:2.5.22
+    image: hawaii/grouper-ui:latest
+    entrypoint: ["/opt/grouper/grouperWebapp/WEB-INF/bin/gsh.sh"]
     command: ["-registry", "-check", "-runscript", "-noprompt"]
     environment:
       JDBC_URL: jdbc:mysql://db:3306/grouper
@@ -21,14 +22,12 @@ services:
     secrets:
       - morphString.properties
   ui:
-    image: scalding/grouper-abused-ui-pac4j
+    image: hawaii/grouper-ui:latest
     environment:
       JDBC_URL: jdbc:mysql://db:3306/grouper
       JDBC_USERNAME: grouper
       JDBC_PASSWORD: grouper
-      GROUPER_UI: "true"
-      UI_BASIC_AUTHN: "false"
-      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+      # JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
     ports:
       - "8080:8080"
       - "5005:5005"

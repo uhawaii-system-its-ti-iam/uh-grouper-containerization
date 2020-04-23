@@ -1,3 +1,4 @@
+addSubject('jj61', 'person', 'jj61');
 grouperPasswordSave = new GrouperPasswordSave();
 grouperPasswordSave.assignUsername("jj61").assignPassword("letmein7").assignEntityType("username");
 grouperPasswordSave.assignApplication(GrouperPassword.Application.UI);

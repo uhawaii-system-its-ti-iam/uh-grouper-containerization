@@ -1,19 +1,6 @@
-import com.google.cloud.tools.jib.api.Containerizer
-import com.google.cloud.tools.jib.api.DockerDaemonImage
-import com.google.cloud.tools.jib.api.Jib
-import com.google.cloud.tools.jib.api.AbsoluteUnixPath
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.google.cloud.tools:jib-core:0.13.1'
-    }
-}
-
 plugins {
     id 'java'
+    id 'com.palantir.docker' version '0.25.0'
 }
 
 group 'edu.hawaii'
@@ -42,16 +29,17 @@ jar {
     archiveBaseName = 'grouper-pac4j'
 }
 
-task createDockerImage {
-    group = 'scalding'
-    dependsOn 'jar'
-    doLast {
-        Jib.from('docker://scalding/grouper-custom-ui:2.5.22')
-            .addLayer(tasks.getByName('jar').outputs.files.collect { it.toPath() }, '/opt/grouper/grouperWebapp/WEB-INF/lib')
-            .addLayer(configurations.runtime.files.collect { it.toPath() }, '/opt/grouper/grouperWebapp/WEB-INF/lib')
-            .addLayer([file('/src/main/docker/container-files/javax.servlet.ServletContainerInitializer').toPath()], '/opt/grouper/grouperWebapp/WEB-INF/classes/META-INF/services')
-            .setWorkingDirectory(AbsoluteUnixPath.get('/opt/grouper/grouperWebapp/WEB-INF/bin'))
-            .setEntrypoint('/opt/tomee/bin/catalina.sh', 'run')
-            .containerize(Containerizer.to(DockerDaemonImage.named('scalding/grouper-custom-ui-pac4j')))
+docker {
+    name "hawaii/grouper-ui:${project.'grouper.version'}-${new Date().format("yyyyMMddHHmmss")}"
+    tag 'latest', 'hawaii/grouper-ui:latest'
+    dockerfile file('Dockerfile-ui')
+    files tasks.jar.outputs
+    files configurations.runtime.files
+    buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
+    copySpec.with {
+        into('/')
+        from('src/main/docker/slashRoot') {
+            into 'src/main/docker/slashRoot'
+        }
     }
 }

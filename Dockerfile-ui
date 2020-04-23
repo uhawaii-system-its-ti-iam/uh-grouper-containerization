@@ -1,0 +1,22 @@
+ARG GROUPER_VERSION
+
+FROM i2incommon/grouper:${GROUPER_VERSION} as install
+
+FROM amazoncorretto:8u252
+
+ARG GROUPER_VERSION
+
+COPY --from=install /opt/grouper/grouperWebapp /opt/grouper/grouperWebapp
+COPY --from=install /opt/tomee /opt/tomee
+
+RUN cp /opt/grouper/grouperWebapp/WEB-INF/libUiAndDaemon/* /opt/grouper/grouperWebapp/WEB-INF/lib \
+ && rm /opt/tomee/bin/setenv.sh
+
+COPY /src/main/docker/slashRoot/ /
+COPY *.jar /opt/grouper/grouperWebapp/WEB-INF/lib/
+
+ENV GROUPER_VERSION ${GROUPER_VERSION}
+ENV GROUPER_UI true
+ENV UI_BASIC_AUTHN false
+
+ENTRYPOINT ["/opt/tomee/bin/catalina.sh", "run"]
