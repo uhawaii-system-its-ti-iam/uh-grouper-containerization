@@ -29,9 +29,12 @@ jar {
     archiveBaseName = 'grouper-pac4j'
 }
 
+def now = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone('GMT'))
 docker {
-    name "hawaii/grouper-ui:${project.'grouper.version'}-${new Date().format("yyyyMMddHHmmss")}"
+    name "hawaii/grouper-ui:${project.'grouper.version'}-${now}"
     tag 'latest', 'hawaii/grouper-ui:latest'
+    tag 'remote', "localhost:5000/hawaii/grouper-ui:${project.'grouper.version'}-${now}"
+    tag 'remoteLatest', "localhost:5000/hawaii/grouper-ui:latest"
     dockerfile file('Dockerfile-ui')
     files tasks.jar.outputs
     files configurations.runtime.files
