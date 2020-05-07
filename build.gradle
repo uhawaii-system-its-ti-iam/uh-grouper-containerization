@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'com.palantir.docker' version '0.25.0'
+    id 'com.palantir.docker' version '0.25.0' apply false
 }
 
 group 'edu.hawaii'
@@ -29,20 +29,69 @@ jar {
     archiveBaseName = 'grouper-pac4j'
 }
 
-def now = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone('GMT'))
-docker {
-    name "hawaii/grouper-ui:${project.'grouper.version'}-${now}"
-    tag 'latest', 'hawaii/grouper-ui:latest'
-    tag 'remote', "localhost:5000/hawaii/grouper-ui:${project.'grouper.version'}-${now}"
-    tag 'remoteLatest', "localhost:5000/hawaii/grouper-ui:latest"
-    dockerfile file('Dockerfile-ui')
-    files tasks.jar.outputs
-    files configurations.runtime.files
-    buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
-    copySpec.with {
-        into('/')
-        from('src/main/docker/slashRoot') {
-            into 'src/main/docker/slashRoot'
+ext {
+    now = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone('GMT'))
+}
+
+def doTags = { def name, now ->
+    tag 'latest', "hawaii/grouper-${name}:latest"
+}
+
+subprojects {
+    apply plugin: 'com.palantir.docker'
+}
+
+project('ui') {
+    docker {
+        name "hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'latest', "hawaii/grouper-${project.name}:latest"
+        tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
+        dockerfile parent.file("Dockerfile-${project.name}")
+        files parent.tasks.jar.outputs
+        files parent.configurations.runtime.files
+        buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
+        copySpec.with {
+            into('/')
+            from(parent.file('src/main/docker/slashRoot')) {
+                into 'src/main/docker/slashRoot'
+            }
+        }
+    }
+}
+
+project('ws') {
+    docker {
+        name "hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'latest', "hawaii/grouper-${project.name}:latest"
+        tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
+        dockerfile parent.file("Dockerfile-${project.name}")
+        buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
+        copySpec.with {
+            into('/')
+            from(parent.file('src/main/docker/slashRoot')) {
+                exclude '**/javax.servlet.ServletContainerInitializer'
+                into 'src/main/docker/slashRoot'
+            }
+        }
+    }
+}
+
+project('daemon') {
+    docker {
+        name "hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'latest', "hawaii/grouper-${project.name}:latest"
+        tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
+        dockerfile parent.file("Dockerfile-${project.name}")
+        buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
+        copySpec.with {
+            into('/')
+            from(parent.file('src/main/docker/slashRoot')) {
+                exclude '**/javax.servlet.ServletContainerInitializer'
+                into 'src/main/docker/slashRoot'
+            }
         }
     }
 }

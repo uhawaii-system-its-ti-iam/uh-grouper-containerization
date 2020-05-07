@@ -1,2 +1,3 @@
 rootProject.name = 'hawaii-grouper'
+include 'ui', 'ws', 'daemon'
 
