@@ -9,7 +9,7 @@ ARG GROUPER_VERSION
 COPY --from=install /opt/grouper/grouperWebapp /opt/grouper/grouperWebapp
 COPY --from=install /opt/tomee /opt/tomee
 
-RUN cp /opt/grouper/grouperWebapp/WEB-INF/libUiAndDaemon/* /opt/grouper/grouperWebapp/WEB-INF/lib \
+RUN cp /opt/grouper/grouperWebapp/WEB-INF/libWs/* /opt/grouper/grouperWebapp/WEB-INF/lib \
  && rm /opt/tomee/bin/setenv.sh
 
 COPY /src/main/docker/slashRoot/ /
