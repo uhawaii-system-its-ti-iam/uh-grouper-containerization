@@ -42,6 +42,12 @@ localhost:5000/hawaii/grouper-daemon   2.5.27-20200513200641   33e2fb62ca7c     
 localhost:5000/hawaii/grouper-daemon   latest                  33e2fb62ca7c        50 seconds ago      498MB
 ```
 
+To push the images to a registry:
+
+```
+./gradlew clean dockerTag dockerPushRemote dockerPushRemoteLatest
+```
+
 # Running
 
 For example configuration, see `src/test/docker/docker-compose.yml`.
