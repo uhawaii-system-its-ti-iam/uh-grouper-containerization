@@ -2,16 +2,11 @@ ARG GROUPER_VERSION
 
 FROM i2incommon/grouper:${GROUPER_VERSION} as install
 
-FROM amazoncorretto:8u252
-
-ARG GROUPER_VERSION
-
-COPY --from=install /opt/grouper/grouperWebapp /opt/grouper/grouperWebapp
-
-RUN cp /opt/grouper/grouperWebapp/WEB-INF/libUiAndDaemon/* /opt/grouper/grouperWebapp/WEB-INF/lib
-
 COPY /src/main/docker/slashRoot/ /
+COPY *.jar /opt/grouper/grouperWebapp/WEB-INF/lib/
 
-ENV GROUPER_VERSION ${GROUPER_VERSION}
+ENV GROUPER_RUN_TOMCAT_NOT_SUPERVISOR = "true"
+ENV GROUPER_UI_GROUPER_AUTH = "true"
+ENV RUN_SHIB_SP = "false"
 
-ENTRYPOINT ["/opt/grouper/grouperWebapp/WEB-INF/bin/gsh.sh", "-loader"]
+CMD daemon

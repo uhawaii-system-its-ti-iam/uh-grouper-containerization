@@ -1,5 +1,4 @@
 plugins {
-    id 'java'
     id 'com.palantir.docker' version '0.25.0' apply false
 }
 
@@ -10,23 +9,6 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    compileOnly "javax.servlet:javax.servlet-api:3.1.0"
-    compileOnly "org.slf4j:slf4j-api:1.7.21"
-
-    compileOnly "edu.internet2.middleware.grouper:grouperClient:2.5.22"
-
-    compile "org.pac4j:jee-pac4j:5.0.0"
-    compile "org.pac4j:pac4j-cas:4.0.0"
-
-    compileOnly "edu.internet2.middleware.grouper:grouper-ui:2.5.22"
-    compileOnly "org.apache.tomcat:tomcat-catalina:8.5.50"
-}
-
-jar {
-    archiveBaseName = 'grouper-pac4j'
 }
 
 ext {
@@ -48,8 +30,6 @@ project('ui') {
         tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
         tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
         dockerfile parent.file("Dockerfile-${project.name}")
-        files parent.tasks.jar.outputs
-        files parent.configurations.runtime.files
         buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
         copySpec.with {
             into('/')
