@@ -12,14 +12,14 @@ On Mac/Linux:
 ```
 git clone git@rep11.pvt.hawaii.edu:iam-developers/hawaii-grouper.git
 cd hawaii-grouper
-./gradlew clean dockerTag
+./gradlew dockerTag
 ```
 
 On Windows:
 ```
 git clone git@rep11.pvt.hawaii.edu:iam-developers/hawaii-grouper.git
 cd hawaii-grouper
-.\gradlew.bat clean dockerTag
+.\gradlew.bat dockerTag
 ```
 
 This will build new images with versions corresponding to the version of grouper and the current timestamp (UTC). For
@@ -45,7 +45,7 @@ localhost:5000/hawaii/grouper-daemon   latest                  33e2fb62ca7c     
 To push the images to a registry:
 
 ```
-./gradlew clean dockerTag dockerPushRemote dockerPushRemoteLatest
+./gradlew dockerTag dockerPushRemote dockerPushRemoteLatest
 ```
 
 # Running
