@@ -54,17 +54,17 @@ For example configuration, see `src/test/docker/docker-compose.yml`.
 
 All images require the following environment variables to run:
 
-* JDBC_URL
-* JDBC_USERNAME
-* JDBC_PASSWORD
-* ENCRYPT_KEY
+* GROUPER_DATABASE_URL
+* GROUPER_DATABASE_USERNAME
+* GROUPER_DATABASE_PASSWORD
+* GROUPER_MORPHSTRING_ENCRYPT_KEY
 
 Additionally, the `ui` image can use the following:
 
 * PAC4J_ENABLED
 * PAC4J_GROUPERCONTEXTURL
-* GROUPERUI_CONFIGURATIONEDITOR_SOURCEADDRESSES (note that this one will change in the future as there's now a standard
-grouper variable)
+* GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES
+* PAC4J_CAS_LOGINURL
 
 example:
 
@@ -72,12 +72,12 @@ example:
 podman run -d --rm --privileged \
     --name grouper_ui \
     -p "8443:8443" \
-    -e JDBC_URL="jdbc:mysql://mdb64.pvt.hawaii.edu:3306/grprscratch?CharSet=utf8&useUnicode=true&characterEncoding=utf8&useSSL=false" \
-    -e JDBC_PASSWORD="grouper_password" \
-    -e JDBC_USERNAME="grpr_admin" \
+    -e GROUPER_DATABASE_URL="jdbc:mysql://mdb64.pvt.hawaii.edu:3306/grprscratch?CharSet=utf8&useUnicode=true&characterEncoding=utf8&useSSL=false" \
+    -e GROUPER_DATABASE_PASSWORD="grouper_password" \
+    -e GROUPER_DATABASE_USERNAME="grpr_admin" \
     -e PAC4J_ENABLED="true" \
     -e PAC4J_GROUPERCONTEXTURL="https://grp73.pvt.hawaii.edu/grouper" \
-    -e ENCRYPT_KEY="somethingreallysecret" \
+    -e GROUPER_MORPHSTRING_ENCRYPT_KEY="somethingreallysecret" \
     -e GROUPERUI_CONFIGURATIONEDITOR_SOURCEADDRESSES="0.0.0.0/32" \
     hawaii/grouper-ui:2.5.23-20200505200930
 ```
