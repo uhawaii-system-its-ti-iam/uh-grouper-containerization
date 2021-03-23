@@ -5,6 +5,6 @@ FROM i2incommon/grouper:${GROUPER_VERSION} as install
 COPY /src/main/docker/slashRoot/ /
 COPY *.jar /opt/grouper/grouperWebapp/WEB-INF/lib/
 
-ENV GROUPER_RUN_TOMCAT_NOT_SUPERVISOR = "true"
+ENV GROUPER_RUN_TOMCAT_NOT_SUPERVISOR="true"
 
 CMD ws
