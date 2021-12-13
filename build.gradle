@@ -23,10 +23,9 @@ subprojects {
 
 project('ui') {
     docker {
-        name "hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'latest', "hawaii/grouper-${project.name}:latest"
-        tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
+        name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'latest', "uh-grouper/grouper-${project.name}:latest"
+        tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-${project.name}:latest"
         dockerfile parent.file("Dockerfile-${project.name}")
         buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
         copySpec.with {
@@ -40,10 +39,9 @@ project('ui') {
 
 project('ws') {
     docker {
-        name "hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'latest', "hawaii/grouper-${project.name}:latest"
-        tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
+        name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'latest', "uh-grouper/grouper-${project.name}:latest"
+        tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-${project.name}:latest"
         dockerfile parent.file("Dockerfile-${project.name}")
         buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
         copySpec.with {
@@ -58,10 +56,9 @@ project('ws') {
 
 project('daemon') {
     docker {
-        name "hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'latest', "hawaii/grouper-${project.name}:latest"
-        tag 'remote', "localhost:5000/hawaii/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'remoteLatest', "localhost:5000/hawaii/grouper-${project.name}:latest"
+        name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
+        tag 'latest', "uh-grouper/grouper-${project.name}:latest"
+        tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-${project.name}:latest"
         dockerfile parent.file("Dockerfile-${project.name}")
         buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
         copySpec.with {
