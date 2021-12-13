@@ -15,4 +15,4 @@ podman run -d --privileged \
     -v /etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key:/etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key \
     -v $PWD/conf/tomcat/server.xml:/opt/tomee/conf/server.xml \
     -v /home/grouper/containers/logs/ws:/opt/grouper/logs \
-    hawaii/grouper-ws
+    rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-ws

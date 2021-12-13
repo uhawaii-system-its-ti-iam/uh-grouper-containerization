@@ -12,4 +12,4 @@ podman run -it --rm --privileged \
     -e GROUPER_MORPHSTRING_ENCRYPT_KEY="MORPH_STRING_ENCRYPT_KEY_HERE" \
     -e GROUPER_LOG_TO_HOST="true" \
     --entrypoint sh \
-    hawaii/grouper-ui
+    rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-ui
