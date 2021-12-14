@@ -14,10 +14,8 @@ podman run -d --privileged \
     -e GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES="0.0.0.0/32" \
     -e GROUPER_LOG_TO_HOST="true" \
     -e GROUPER_UI_GROUPER_AUTH="false" \
-    -e GROUPER_EXTRA_CATALNA_OPTS="-Dorg.ldaptive.provider=org.ldaptive.provider.unboundid.UnboundIDProvider" \
     -v /etc/pki/tls/certs/grouper-dev.pvt.hawaii.edu.pem:/etc/pki/tls/certs/grouper-dev.pvt.hawaii.edu.pem \
     -v /etc/pki/tls/certs/certificate-chain-InC-exp-2024-10-05.pem:/etc/pki/tls/certs/certificate-chain-InC.pem \
     -v /etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key:/etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key \
-    -v $PWD/conf/tomcat/server.xml:/opt/tomee/conf/server.xml \
     -v $PWD/logs/ui:/opt/grouper/logs \
     rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-ui

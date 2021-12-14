@@ -13,6 +13,5 @@ podman run -d --privileged \
     -v /etc/pki/tls/certs/grouper-dev.pvt.hawaii.edu.pem:/etc/pki/tls/certs/grouper-dev.pvt.hawaii.edu.pem \
     -v /etc/pki/tls/certs/certificate-chain-InC-exp-2024-10-05.pem:/etc/pki/tls/certs/certificate-chain-InC.pem \
     -v /etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key:/etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key \
-    -v $PWD/conf/tomcat/server.xml:/opt/tomee/conf/server.xml \
     -v /home/grouper/containers/logs/ws:/opt/grouper/logs \
     rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-ws
