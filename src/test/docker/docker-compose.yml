@@ -20,6 +20,9 @@ services:
       LDAP_DOMAIN: "internet2.edu"
       HOSTNAME: "ldap"
       LDAP_TLS_VERIFY_CLIENT: "try"
+    volumes:
+      - directory_data:/var/lib/ldap
+      - directory_config:/etc/ldap/slapd.d
   init:
     image: hawaii/grouper-ui:latest
     entrypoint: ["/opt/grouper/grouperWebapp/WEB-INF/bin/gsh.sh"]
@@ -31,13 +34,16 @@ services:
     secrets:
       - morphString.properties
   ui:
-    image: hawaii/grouper-ui:latest
+    image: uh-grouper/grouper-ui:latest
     environment:
-      JDBC_URL: jdbc:mysql://db:3306/grouper
-      JDBC_USERNAME: grouper
-      JDBC_PASSWORD: grouper
+      GROUPER_DATABASE_URL: "jdbc:mysql://db:3306/grouper"
+      GROUPER_DATABASE_USERNAME: "grouper"
+      GROUPER_DATABASE_PASSWORD: "grouper"
+      GROUPER_AUTO_DDL_UPTOVERSION: "v4.*.*"
       JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
       # JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+      GROUPER_UI_GROUPER_AUTH: "true"
+      GROUPERSYSTEM_QUICKSTART_PASS: "letmein7"
     ports:
       - "8080:8080"
       - "8443:8443"
@@ -50,3 +56,8 @@ secrets:
     file: morphString.properties
   pac4j.properties:
     file: pac4j.properties
+volumes:
+  directory_data:
+    driver: local
+  directory_config:
+    driver: local
