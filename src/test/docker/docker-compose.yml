@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  db:
+    image: mariadb:10.4.12-bionic
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_USER: grouper
+      MYSQL_PASSWORD: grouper
+      MYSQL_DATABASE: grouper
+    command: ["--character-set-server=utf8", "--collation-server=utf8_bin"]
+    ports:
+      - "3306:3306"
+  ldap:
+    build: ./ldap
+    ports:
+    - "389:389"
+    environment:
+      LDAP_BASE_DN: "dc=internet2,dc=edu"
+      LDAP_DOMAIN: "internet2.edu"
+      HOSTNAME: "ldap"
+      LDAP_TLS_VERIFY_CLIENT: "try"
+  init:
+    image: hawaii/grouper-ui:latest
+    entrypoint: ["/opt/grouper/grouperWebapp/WEB-INF/bin/gsh.sh"]
+    command: ["-registry", "-check", "-runscript", "-noprompt"]
+    environment:
+      JDBC_URL: jdbc:mysql://db:3306/grouper
+      JDBC_USERNAME: grouper
+      JDBC_PASSWORD: grouper
+    secrets:
+      - morphString.properties
+  ui:
+    image: hawaii/grouper-ui:latest
+    environment:
+      JDBC_URL: jdbc:mysql://db:3306/grouper
+      JDBC_USERNAME: grouper
+      JDBC_PASSWORD: grouper
+      JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      # JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+      - "5005:5005"
+    secrets:
+      - morphString.properties
+      - pac4j.properties
+secrets:
+  morphString.properties:
+    file: morphString.properties
+  pac4j.properties:
+    file: pac4j.properties
