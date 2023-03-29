@@ -1,5 +1,5 @@
 plugins {
-    id 'com.palantir.docker' version '0.25.0' apply false
+    id 'com.palantir.docker' version '0.25.0'
 }
 
 group 'edu.hawaii'
@@ -17,56 +17,15 @@ def doTags = { def name, now ->
     tag 'latest', "hawaii/grouper-${name}:latest"
 }
 
-subprojects {
-    apply plugin: 'com.palantir.docker'
-}
-
-project('ui') {
-    docker {
-        name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'latest', "uh-grouper/grouper-${project.name}:latest"
-        tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-${project.name}:latest"
-        dockerfile parent.file("Dockerfile-${project.name}")
-        buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
-        copySpec.with {
-            into('/')
-            from(parent.file('src/main/docker/slashRoot')) {
-                into 'src/main/docker/slashRoot'
-            }
-        }
-    }
-}
-
-project('ws') {
-    docker {
-        name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'latest', "uh-grouper/grouper-${project.name}:latest"
-        tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-${project.name}:latest"
-        dockerfile parent.file("Dockerfile-${project.name}")
-        buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
-        copySpec.with {
-            into('/')
-            from(parent.file('src/main/docker/slashRoot')) {
-                exclude '**/javax.servlet.ServletContainerInitializer'
-                into 'src/main/docker/slashRoot'
-            }
-        }
-    }
-}
-
-project('daemon') {
-    docker {
-        name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
-        tag 'latest', "uh-grouper/grouper-${project.name}:latest"
-        tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper-${project.name}:latest"
-        dockerfile parent.file("Dockerfile-${project.name}")
-        buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
-        copySpec.with {
-            into('/')
-            from(parent.file('src/main/docker/slashRoot')) {
-                exclude '**/javax.servlet.ServletContainerInitializer'
-                into 'src/main/docker/slashRoot'
-            }
+docker {
+    name "uh-grouper/grouper-${project.name}:${project.'grouper.version'}-${now}"
+    tag 'latest', "uh-grouper/grouper-${project.name}:latest"
+    tag 'remoteLatest', "rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:latest"
+    buildArgs(['GROUPER_VERSION': (project.'grouper.version')])
+    copySpec.with {
+        into('/')
+        from(file('src/main/docker/slashRoot')) {
+            into 'src/main/docker/slashRoot'
         }
     }
 }
