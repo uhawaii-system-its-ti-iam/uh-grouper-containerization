@@ -115,16 +115,8 @@
                port="8443"
                maxThreads="500"
                maxPostSize="100000"
-               scheme="https" secure="true" SSLEnabled="true">
-        <SSLHostConfig protocols="TLSv1.1+TLSv1.2"
-                       certificateVerification="none"
-                       honorCipherOrder="true"
-                       ciphers="HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!kRSA:!PSK" >
-            <Certificate certificateFile="/etc/pki/tls/certs/grouper-dev.pvt.hawaii.edu.pem"
-                         certificateChainFile="/etc/pki/tls/certs/certificate-chain-InC.pem"
-                         certificateKeyFile="/etc/pki/tls/private/grouper-dev.pvt.hawaii.edu.key" >
-            </Certificate>
-        </SSLHostConfig>
+               scheme="https" secure="true" SSLEnabled="true"
+               keystoreFile="/opt/keypairs/keystore.p12" keystoreType="PKCS12" >
     </Connector>
 
 
