@@ -115,8 +115,8 @@
                port="8443"
                maxThreads="500"
                maxPostSize="100000"
-               scheme="https" secure="true" SSLEnabled="true"
-               keystoreFile="/opt/keypairs/keystore.p12" keystoreType="PKCS12" >
+	       scheme="https" secure="true" SSLEnabled="true"
+	       keystoreFile="/opt/keypairs/keystore.p12" keystoreType="PKCS12" >
     </Connector>
 
 
