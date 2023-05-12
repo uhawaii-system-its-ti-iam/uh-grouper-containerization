@@ -24,9 +24,9 @@ build-job:       # This job runs in the build stage, which runs first.
   image: quay.io/buildah/stable
   stage: build
   variables:
-    IMAGE_TAG: $CI_REGISTRY/iam/uh-grouper/grouper:4.1.6
+    IMAGE_TAG: $CI_REGISTRY:5001/iam/uh-grouper/grouper:4.1.6
   script:
-    - buildah login --tls-verify=false -u unicon_jj -p "glpat-xFVtjtazNpSyxXsvQy-C" $CI_REGISTRY
+    - buildah login --tls-verify=false -u unicon_jj -p "glpat-xFVtjtazNpSyxXsvQy-C" $CI_REGISTRY:5001
     - echo $IMAGE_TAG
     - buildah bud --build-arg-file=build.args -t $IMAGE_TAG .
     - buildah push --tls-verify=false $IMAGE_TAG
