@@ -34,7 +34,12 @@ services:
     secrets:
       - morphString.properties
   ui:
-    image: uh-grouper/grouper-ui:latest
+    build:
+      context: ../../..
+      args:
+        GROUPER_VERSION: 4.1.2
+    command:
+      - ui
     environment:
       GROUPER_DATABASE_URL: "jdbc:mysql://db:3306/grouper"
       GROUPER_DATABASE_USERNAME: "grouper"
@@ -44,6 +49,7 @@ services:
       # JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
       GROUPER_UI_GROUPER_AUTH: "true"
       GROUPERSYSTEM_QUICKSTART_PASS: "letmein7"
+      GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     ports:
       - "8080:8080"
       - "8443:8443"
