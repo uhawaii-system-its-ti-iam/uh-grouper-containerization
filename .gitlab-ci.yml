@@ -25,7 +25,7 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   variables:
     IMAGE_TAG: $CI_REGISTRY:5001/iam/uh-grouper/grouper:4.1.6-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
-    DEPLOY_TAG: $CI_REGISTRY:5001/iam/uh-grouper/grouper:4.1.6-3
+    DEPLOY_TAG: $CI_REGISTRY:5001/iam/uh-grouper/grouper:4.1.6-4
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo $CI_COMMIT_TIMESTAMP
@@ -35,11 +35,3 @@ build-job:       # This job runs in the build stage, which runs first.
     - buildah push --tls-verify=false $IMAGE_TAG
     - buildah push --tls-verify=false $IMAGE_TAG $CI_REGISTRY:5001/iam/uh-grouper/grouper:4.1.6-$CI_COMMIT_BRANCH-latest
     - buildah push --tls-verify=false $DEPLOY_TAG
-deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
-  variables:
-    WEBHOOK_URL: https://contain-test.pvt.hawaii.edu/api/stacks/webhooks/ef2e41da-4136-4ff4-afba-1f35c7898727
-  script:
-    - echo "calling portainer"
-    - wget --post-data "" $WEBHOOK_URL
