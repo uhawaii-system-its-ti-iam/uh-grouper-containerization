@@ -1,11 +1,11 @@
 services:
   ui:
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.2
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.6-1
     command: ui
     ports:
       - "8443:8443"
     user: root
-    environment:
+    environment: &grouper_environment
       GROUPER_RUN_TOMCAT_NOT_SUPERVISOR: true
       RUN_SHIB_SP: false
       GROUPER_UI_GROUPER_AUTH: false
@@ -17,33 +17,21 @@ services:
     volumes:
       - tls-keypairs:/opt/keypairs:ro
   ws:
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.2
+    image: *grouper_image
     command: ws
     ports:
       - "9443:8443"
     user: root
     environment:
-      GROUPER_RUN_TOMCAT_NOT_SUPERVISOR: true
-      RUN_SHIB_SP: false
-      GROUPER_UI_GROUPER_AUTH: false
-      GROUPER_AUTO_DDL_UPTOVERSION: V4.*.*
-      GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES: 0.0.0.0/32
-      PAC4J_ENABLED: true
-      PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
-      GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
+      <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
   daemon:
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.2
+    image: *grouper_image
     command: daemon
     user: root
     environment:
-      GROUPER_RUN_TOMCAT_NOT_SUPERVISOR: true
-      RUN_SHIB_SP: false
-      GROUPER_UI_GROUPER_AUTH: false
-      GROUPER_AUTO_DDL_UPTOVERSION: V4.*.*
-      GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES: 0.0.0.0/32
-      GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
+      <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
 volumes:
