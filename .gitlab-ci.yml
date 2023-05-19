@@ -42,4 +42,4 @@ deploy-job:      # This job runs in the deploy stage.
     WEBHOOK_URL: https://contain-test.pvt.hawaii.edu/api/stacks/webhooks/ef2e41da-4136-4ff4-afba-1f35c7898727
   script:
     - echo "calling portainer"
-    - wget --help
+    - wget --method=POST $WEBHOOK_URL
