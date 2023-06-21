@@ -1,6 +1,6 @@
 services:
   ui:
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.6-${IMAGE_NAME_TAG}
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.6-11
     command: ui
     ports:
       - "8443:8443"
