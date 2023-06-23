@@ -1,4 +1,3 @@
-# Invoked by .gitlab-ci.yml
-# Note: changing the version number here requires changing the 
-#       version number in the yml file.
+# Invoked by the Gradle build process.
+
 GROUPER_VERSION=4.1.6
