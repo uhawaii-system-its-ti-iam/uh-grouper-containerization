@@ -1,5 +1,5 @@
 # Grouper
-Utilizes podman and Portainer for conterization and orchestration.
+Utilizes Podman and Portainer for containerization and orchestration.
 
 ## Upgrading Grouper
 The following files need to be updated in order for the Grouper version to match the image
