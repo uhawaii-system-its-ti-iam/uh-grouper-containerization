@@ -1,4 +1,4 @@
-# .gitlab-ci.yml is a root Grouper CI/CD pileline template.
+# .gitlab-ci.yml is a root CI/CD pileline template.
 
 stages:          # Stage the jobs.
   - build
