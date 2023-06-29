@@ -7,6 +7,7 @@ build-job:       # Build job.
   image: quay.io/buildah/stable
   stage: build
   variables:
+    # Also update portainer/stack.yml if the version changes.
     GROUPER_VERSION: 4.1.6
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
