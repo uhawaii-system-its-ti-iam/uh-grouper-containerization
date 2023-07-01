@@ -1,5 +1,12 @@
+# Pipeline deploy configuration.
+# - See .gitlab-ci.yml for the pipeline build configuration.
+#
+# Deployment is trigger by changing *both* this file and .gitlab-ci.yml by
+# bumping up the image file deploy tag index by +1.
+
 services:
   ui:
+    # Bump up the index to trigger a new deployment.
     image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.6-12
     command: ui
     ports:
@@ -20,6 +27,7 @@ services:
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     volumes:
       - tls-keypairs:/opt/keypairs:ro
+      - logs:/home/grouper/logs
   ws:
     image: *grouper_image
     command: ws
@@ -30,6 +38,7 @@ services:
       <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
+      - logs:/home/grouper/logs
   daemon:
     image: *grouper_image
     command: daemon
@@ -38,6 +47,9 @@ services:
       <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
+      - logs:/home/grouper/logs
 volumes:
   tls-keypairs:
+    driver: local
+  logs:
     driver: local

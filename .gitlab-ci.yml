@@ -1,9 +1,13 @@
-# .gitlab-ci.yml is a root CI/CD pileline template.
+# Pipeline build configuration.
+# - See /portainer/slack.yml for the pipeline deploy configuration.
+#
+# Deployment is trigger by changing *both* this file and portainer/stack.yml by
+# bumping up the image file deploy tag index by +1.
 
 stages:          # Stage the jobs.
   - build
 
-build-job:       # Build job.
+build-job:       # Build job, invokes Dockerfile to build the images.
   image: quay.io/buildah/stable
   stage: build
   variables:
@@ -12,6 +16,7 @@ build-job:       # Build job.
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
+    # Bump up the index to trigger a new deployment.
     DEPLOY_TAG: $IMAGE_NAME-12
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
