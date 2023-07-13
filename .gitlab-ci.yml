@@ -1,4 +1,6 @@
-# Pipeline build configuration.
+# GitLab pipeline build configuration.
+# - ref: https://docs.gitlab.com/ee/ci/yaml/
+#
 # - See /portainer/slack.yml for the pipeline deploy configuration.
 #
 # Deployment is trigger by changing *both* this file and portainer/stack.yml by

@@ -27,7 +27,7 @@ services:
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     volumes:
       - tls-keypairs:/opt/keypairs:ro
-      - logs:/home/grouper/logs
+      - logs:/home/grouper/grouper/logs
   ws:
     image: *grouper_image
     command: ws
@@ -38,7 +38,7 @@ services:
       <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
-      - logs:/home/grouper/logs
+      - logs:/home/grouper/grouper/logs
   daemon:
     image: *grouper_image
     command: daemon
@@ -47,7 +47,7 @@ services:
       <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
-      - logs:/home/grouper/logs
+      - logs:/home/grouper/grouper/logs
 volumes:
   tls-keypairs:
     driver: local
