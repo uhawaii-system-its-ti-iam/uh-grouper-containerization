@@ -1,0 +1,31 @@
+# GitLab pipeline build configuration.
+# - ref: https://docs.gitlab.com/ee/ci/yaml/
+#
+# - See /portainer/slack.yml for the pipeline deploy configuration.
+#
+# Deployment is trigger by changing *both* this file and portainer/stack.yml by
+# bumping up the image file deploy tag index by +1.
+
+stages:          # Stage the jobs.
+  - build
+
+build-job:       # Build job.
+  image: quay.io/buildah/stable
+  stage: build
+  variables:
+    # Also update portainer/stack.yml if the grouper version changes.
+    GROUPER_VERSION: 4.1.6
+    # Also update build.gradle & portainer/stack.yml if the image name changes.
+    IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
+    IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
+    # Bump up the index to trigger a new deployment.
+    DEPLOY_TAG: $IMAGE_NAME-15
+  script:
+    - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
+    - echo $CI_COMMIT_TIMESTAMP
+    - buildah bud --build-arg-file=build.args -t $IMAGE_TAG .
+    - buildah tag $IMAGE_TAG $IMAGE_NAME-$CI_COMMIT_BRANCH-latest
+    - buildah tag $IMAGE_TAG $DEPLOY_TAG
+    - buildah push --tls-verify=false $IMAGE_TAG
+    - buildah push --tls-verify=false $IMAGE_TAG $IMAGE_NAME-$CI_COMMIT_BRANCH-latest
+    - buildah push --tls-verify=false $DEPLOY_TAG
