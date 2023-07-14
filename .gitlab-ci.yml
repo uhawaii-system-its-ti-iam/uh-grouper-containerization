@@ -19,7 +19,7 @@ build-job:       # Build job.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
     # Bump up the index to trigger a new deployment.
-    DEPLOY_TAG: $IMAGE_NAME-15
+    DEPLOY_TAG: $IMAGE_NAME-18
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo $CI_COMMIT_TIMESTAMP
