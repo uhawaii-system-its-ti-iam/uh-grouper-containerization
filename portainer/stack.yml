@@ -52,4 +52,4 @@ volumes:
   tls-keypairs:
     driver: local
   logs:
-    driver: local
+    external: true
