@@ -1,7 +1,7 @@
 # Pipeline deploy configuration.
 # - See .gitlab-ci.yml for the pipeline build configuration.
 #
-# Deployment is trigger by changing *both* this file and .gitlab-ci.yml by
+# Deployment is triggered by changing *both* this file and .gitlab-ci.yml by
 # bumping up the image file deploy tag index by +1.
 
 services:
