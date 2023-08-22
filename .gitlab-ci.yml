@@ -15,7 +15,7 @@ build-job:       # Build job.
   variables:
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
-    IMAGE_TAG_ID: 1
+    IMAGE_TAG_ID: 2
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
