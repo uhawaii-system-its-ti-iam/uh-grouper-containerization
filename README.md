@@ -3,7 +3,7 @@ Utilizes Podman and Portainer for containerization and orchestration.
 
 ## Upgrading Grouper
 The following files need to be updated in order for the Grouper version to match the image
-names.  When change Grouper versions, reset the DEPLOY_TAG to 1.
+names.  When change Grouper versions, reset the DEPLOY_TAG to 0.
 
 - build.args
 - .gitlab-ci.yml
@@ -14,7 +14,9 @@ names.  When change Grouper versions, reset the DEPLOY_TAG to 1.
 Any commits pushed to the project on GitLab will trigger a build.
 
 ## Triggering a Deploy
-A) Since we are using the free version of Portainer two files must be changed to trigger a build.
+A) Two files must be changed. 
+
+Note that Portainer also needs to reference the appropriate project branch (main for the Dev environment).
 
 **.gitlab-ci.yml** - increment the DEPLOY_TAG value (8 to 9 below)
 
