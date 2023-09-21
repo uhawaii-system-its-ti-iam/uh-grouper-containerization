@@ -27,8 +27,8 @@ services:
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     volumes:
-      - tls-keypairs:/opt/keypairs:ro,z
-      - /home/grouper/grouper/logs:/opt/grouper/logs:rw,z
+      - tls-keypairs:/opt/keypairs:ro
+      - /home/grouper/grouper/logs:/opt/grouper/logs
   ws:
     image: *grouper_image
     command: ws
@@ -39,7 +39,7 @@ services:
       <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
-      - /home/grouper/grouper/logs:/opt/grouper/logs:rw,z
+      - /home/grouper/grouper/logs:/opt/grouper/logs
   daemon:
     image: *grouper_image
     command: daemon
@@ -48,7 +48,6 @@ services:
       <<: *grouper_environment
     volumes:
       - tls-keypairs:/opt/keypairs:ro
-      - /home/grouper/grouper/logs:/opt/grouper/logs:rw,z
+      - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:
   tls-keypairs:
-  grouper-logs:
