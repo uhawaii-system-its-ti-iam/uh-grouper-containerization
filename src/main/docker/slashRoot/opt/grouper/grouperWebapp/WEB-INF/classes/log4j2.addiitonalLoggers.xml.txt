@@ -1,0 +1,50 @@
+    <!-- Appenders -->
+    
+    <!-- Log messages to stderr -->
+    <appender name="grouper_stderr" level="INFO" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.err" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- Log messages to stdout -->
+    <appender name="grouper_stdout" level="INFO" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- Grouper API event logging -->
+    <appender name="grouper_event" level="INFO" class="org.apache.log4j.FileAppender">
+        <param name="File" value="/opt/grouper/logs/grouper-api_event.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- Grouper API error logging -->
+    <appender name="grouper_error" level="ERROR" class="org.apache.log4j.FileAppender">
+        <param name="File" value="/opt/grouper/logs/grouper-api_error.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- Debug logging -->
+    <appender name="grouper_debug" level="INFO" class="org.apache.log4j.FileAppender">
+        <param name="File" value="/opt/grouper/logs/grouper-api_debug.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- Benchmark logging -->
+    <appender name="grouper_gb" level="INFO" class="org.apache.log4j.FileAppender">
+        <param name="File" value="/opt/grouper/logs/grouper-api_bench.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
+        </layout>
+    </appender>
+    
