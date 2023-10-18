@@ -8,7 +8,7 @@
 services:
   ui:
     # Bump up the index to trigger a new deployment.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-19
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-20
     command: ui
     ports:
       - "8443:8443"
@@ -19,6 +19,7 @@ services:
       GROUPER_DATABASE_PASSWORD: ${GROUPER_DATABASE_PASSWORD}
       GROUPER_MORPHSTRING_ENCRYPT_KEY: ${GROUPER_MORPHSTRING_ENCRYPT_KEY}
       GROUPER_RUN_TOMCAT_NOT_SUPERVISOR: true
+      GROUPER_LOG_TO_HOST: true
       RUN_SHIB_SP: false
       GROUPER_UI_GROUPER_AUTH: false
       GROUPER_AUTO_DDL_UPTOVERSION: V4.*.*
