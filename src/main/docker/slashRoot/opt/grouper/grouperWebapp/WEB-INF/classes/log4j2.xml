@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Configuration status="info">
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="Grouper">
     <Properties>
         <Property name="layout">%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n</Property>
         <Property name="env">dev;</Property>
@@ -7,6 +7,7 @@
         <Property name="grouplogprefix">grouper-ws;</Property>
         <Property name="retentionpolicy01">180</Property>
     </Properties>
+
     <Appenders>
         <Console name="stderr" target="SYSTEM_ERR">
             <PatternLayout pattern="${grouplogprefix};${env}${usertoken}${layout}"/>
@@ -69,149 +70,107 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
 
-        <!-- Appenders -->
-
         <!-- Log messages to stderr -->
-        <appender name="grouper_stderr" level="INFO" class="org.apache.log4j.ConsoleAppender">
-            <param name="Target" value="System.err"/>
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
-            </layout>
-        </appender>
+        <Console name="grouper_stderr" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+        </Console>
 
         <!-- Log messages to stdout -->
-        <appender name="grouper_stdout" level="INFO" class="org.apache.log4j.ConsoleAppender">
-            <param name="Target" value="System.out"/>
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
-            </layout>
-        </appender>
+        <Console name="grouper_stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+        </Console>
 
         <!-- Grouper API event logging -->
-        <appender name="grouper_event" level="INFO" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_event.log"/>
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
-            </layout>
-        </appender>
+        <File name="grouper_event" fileName="/opt/grouper/logs/grouper-api_event.log">
+            <PatternLayout pattern="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+        </File>
 
         <!-- Grouper API error logging -->
-        <appender name="grouper_error" level="ERROR" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_error.log"/>
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
-            </layout>
-        </appender>
+        <File name="grouper_error" fileName="/opt/grouper/logs/grouper-api_error.log">
+            <PatternLayout pattern="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+        </File>
 
         <!-- Debug logging -->
-        <appender name="grouper_debug" level="INFO" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_debug.log"/>
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
-            </layout>
-        </appender>
+        <File name="grouper_debug" fileName="/opt/grouper/logs/grouper-api_debug.log">
+            <PatternLayout pattern="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+        </File>
 
         <!-- Benchmark logging -->
-        <appender name="grouper_gb" level="INFO" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_bench.log"/>
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
-            </layout>
-        </appender>
+        <File name="grouper_gb" fileName="/opt/grouper/logs/grouper-api_bench.log">
+            <PatternLayout pattern="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+        </File>
     </Appenders>
 
     <Loggers>
         <Root level="error">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Root>
         <Logger name="org.apache.catalina" level="info" additivity="false">
-            <!--<AppenderRef ref="logpipe_catalina" />-->
             <AppenderRef ref="file_catalina"/>
         </Logger>
         <Logger name="edu.internet2.middleware" level="warn" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.loader.GrouperLoaderLog" level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_daemon"/>-->
             <AppenderRef ref="file_grouper_daemon"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.pspng" level="warn" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_pspng"/>-->
             <AppenderRef ref="file_grouper_pspng"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.provisioning.GrouperProvisioningObjectLog" level="debug"
                 additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.syncToGrouper.SyncToGrouperFromSqlDaemon" level="debug"
                 additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.provisioning.GrouperProvisioningLogCommands" level="debug"
                 additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.stem.StemViewPrivilegeEsbListener" level="debug"
                 additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.stem.StemViewPrivilegeFullDaemonLogic" level="debug"
                 additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="org.apache.tools.ant" level="warn" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.util.PerformanceLogger" level="info" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.ws.util.GrouperWsLog" level="off" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_ws"/>-->
             <AppenderRef ref="file_grouper_ws"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.ws.util.GrouperWsLongRunningLog" level="off" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_ws_longRunning"/>-->
             <AppenderRef ref="file_grouper_ws_longRunning"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.ui.customUi.CustomUiEngine" level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.upenn.isc.pennGrouper.o365" level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.remedy.GrouperRemedyLog" level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.remedy.digitalMarketplace.GrouperDigitalMarketplaceLog"
                 level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouperBox.GrouperBoxLog" level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouperClient.jdbc.tableSync.GcTableSyncLog" level="debug"
                 additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
         <Logger name="edu.internet2.middleware.grouper.app.zoom" level="debug" additivity="false">
-            <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
-
     </Loggers>
 </Configuration>
