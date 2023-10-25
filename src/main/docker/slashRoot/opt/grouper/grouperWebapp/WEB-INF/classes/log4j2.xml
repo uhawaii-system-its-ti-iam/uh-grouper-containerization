@@ -12,57 +12,114 @@
             <PatternLayout pattern="${grouplogprefix};${env}${usertoken}${layout}"/>
         </Console>
 
-        <RollingFile name="file_catalina" fileName="/opt/grouper/logs/catalina.out" filePattern="/opt/grouper/logs/catalina.out.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_catalina" fileName="/opt/grouper/logs/catalina.out"
+                     filePattern="/opt/grouper/logs/catalina.out.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}catalina.out;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
-        <RollingFile name="file_grouper_error" fileName="/opt/grouper/logs/grouper.log" filePattern="/opt/grouper/logs/grouper.log.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_grouper_error" fileName="/opt/grouper/logs/grouper.log"
+                     filePattern="/opt/grouper/logs/grouper.log.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}grouper_error.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
-        <RollingFile name="file_grouper_daemon" fileName="/opt/grouper/logs/grouperDaemon.log" filePattern="/opt/grouper/logs/grouperDaemon.log.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_grouper_daemon" fileName="/opt/grouper/logs/grouperDaemon.log"
+                     filePattern="/opt/grouper/logs/grouperDaemon.log.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}grouperDaemon.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
-        <RollingFile name="file_grouper_pspng" fileName="/opt/grouper/logs/pspng.log" filePattern="/opt/grouper/logs/pspng.log.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_grouper_pspng" fileName="/opt/grouper/logs/pspng.log"
+                     filePattern="/opt/grouper/logs/pspng.log.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}pspng.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
-        <RollingFile name="file_grouper_provisioning" fileName="/opt/grouper/logs/provisioning.log" filePattern="/opt/grouper/logs/provisioning.log.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_grouper_provisioning" fileName="/opt/grouper/logs/provisioning.log"
+                     filePattern="/opt/grouper/logs/provisioning.log.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}provisioning.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
-        <RollingFile name="file_grouper_ws" fileName="/opt/grouper/logs/grouper_ws.log" filePattern="/opt/grouper/logs/grouper_ws.log.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_grouper_ws" fileName="/opt/grouper/logs/grouper_ws.log"
+                     filePattern="/opt/grouper/logs/grouper_ws.log.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}grouper_ws.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
-        <RollingFile name="file_grouper_ws_longRunning" fileName="/opt/grouper/logs/grouper_ws_longRunning.log" filePattern="/opt/grouper/logs/grouper_ws_longRunning.log.%d{yyyy-MM-dd}" >
+        <RollingFile name="file_grouper_ws_longRunning" fileName="/opt/grouper/logs/grouper_ws_longRunning.log"
+                     filePattern="/opt/grouper/logs/grouper_ws_longRunning.log.%d{yyyy-MM-dd}">
             <PatternLayout pattern="${grouplogprefix}grouper_ws_longRunning.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
             </Policies>
-            <DefaultRolloverStrategy max="${retentionpolicy01}" />
+            <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
 
+        <!-- Appenders -->
+
+        <!-- Log messages to stderr -->
+        <appender name="grouper_stderr" level="INFO" class="org.apache.log4j.ConsoleAppender">
+            <param name="Target" value="System.err"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+            </layout>
+        </appender>
+
+        <!-- Log messages to stdout -->
+        <appender name="grouper_stdout" level="INFO" class="org.apache.log4j.ConsoleAppender">
+            <param name="Target" value="System.out"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+            </layout>
+        </appender>
+
+        <!-- Grouper API event logging -->
+        <appender name="grouper_event" level="INFO" class="org.apache.log4j.FileAppender">
+            <param name="File" value="/opt/grouper/logs/grouper-api_event.log"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+            </layout>
+        </appender>
+
+        <!-- Grouper API error logging -->
+        <appender name="grouper_error" level="ERROR" class="org.apache.log4j.FileAppender">
+            <param name="File" value="/opt/grouper/logs/grouper-api_error.log"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+            </layout>
+        </appender>
+
+        <!-- Debug logging -->
+        <appender name="grouper_debug" level="INFO" class="org.apache.log4j.FileAppender">
+            <param name="File" value="/opt/grouper/logs/grouper-api_debug.log"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+            </layout>
+        </appender>
+
+        <!-- Benchmark logging -->
+        <appender name="grouper_gb" level="INFO" class="org.apache.log4j.FileAppender">
+            <param name="File" value="/opt/grouper/logs/grouper-api_bench.log"/>
+            <layout class="org.apache.log4j.PatternLayout">
+                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n"/>
+            </layout>
+        </appender>
     </Appenders>
+
     <Loggers>
         <Root level="error">
             <!--<AppenderRef ref="logpipe_grouper_error"/>-->
@@ -84,23 +141,28 @@
             <!--<AppenderRef ref="logpipe_grouper_pspng"/>-->
             <AppenderRef ref="file_grouper_pspng"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouper.app.provisioning.GrouperProvisioningObjectLog" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouper.app.provisioning.GrouperProvisioningObjectLog" level="debug"
+                additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouper.app.syncToGrouper.SyncToGrouperFromSqlDaemon" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouper.app.syncToGrouper.SyncToGrouperFromSqlDaemon" level="debug"
+                additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouper.app.provisioning.GrouperProvisioningLogCommands" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouper.app.provisioning.GrouperProvisioningLogCommands" level="debug"
+                additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouper.stem.StemViewPrivilegeEsbListener" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouper.stem.StemViewPrivilegeEsbListener" level="debug"
+                additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouper.stem.StemViewPrivilegeFullDaemonLogic" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouper.stem.StemViewPrivilegeFullDaemonLogic" level="debug"
+                additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
@@ -132,7 +194,8 @@
             <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouper.app.remedy.digitalMarketplace.GrouperDigitalMarketplaceLog" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouper.app.remedy.digitalMarketplace.GrouperDigitalMarketplaceLog"
+                level="debug" additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
@@ -140,7 +203,8 @@
             <!--<AppenderRef ref="logpipe_grouper_provisioning"/>-->
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
-        <Logger name="edu.internet2.middleware.grouperClient.jdbc.tableSync.GcTableSyncLog" level="debug" additivity="false">
+        <Logger name="edu.internet2.middleware.grouperClient.jdbc.tableSync.GcTableSyncLog" level="debug"
+                additivity="false">
             <!--<AppenderRef ref="logpipe_grouper_error"/>-->
             <AppenderRef ref="file_grouper_error"/>
         </Logger>
@@ -149,54 +213,5 @@
             <AppenderRef ref="file_grouper_provisioning"/>
         </Logger>
 
-        <!-- Appenders -->
-
-        <!-- Log messages to stderr -->
-        <appender name="grouper_stderr" level="INFO" class="org.apache.log4j.ConsoleAppender">
-            <param name="Target" value="System.err" />
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
-            </layout>
-        </appender>
-
-        <!-- Log messages to stdout -->
-        <appender name="grouper_stdout" level="INFO" class="org.apache.log4j.ConsoleAppender">
-            <param name="Target" value="System.out" />
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
-            </layout>
-        </appender>
-
-        <!-- Grouper API event logging -->
-        <appender name="grouper_event" level="INFO" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_event.log" />
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
-            </layout>
-        </appender>
-
-        <!-- Grouper API error logging -->
-        <appender name="grouper_error" level="ERROR" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_error.log" />
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
-            </layout>
-        </appender>
-
-        <!-- Debug logging -->
-        <appender name="grouper_debug" level="INFO" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_debug.log" />
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
-            </layout>
-        </appender>
-
-        <!-- Benchmark logging -->
-        <appender name="grouper_gb" level="INFO" class="org.apache.log4j.FileAppender">
-            <param name="File" value="/opt/grouper/logs/grouper-api_bench.log" />
-            <layout class="org.apache.log4j.PatternLayout">
-                <param name="ConversionPattern" value="%d{ISO8601}: [%t] %-5p %C{1}.%M(%L) - %x - %m%n" />
-            </layout>
-        </appender>
     </Loggers>
 </Configuration>
