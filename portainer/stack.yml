@@ -9,7 +9,7 @@ version: "3"
 services:
   ui:
     # Bump up the index to trigger a new deployment.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-25
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-26
     command: ui
     ports:
       - "8443:8443"
@@ -28,7 +28,7 @@ services:
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-    logging: &container_logging
+    logging:
       driver: "json-file"
       options:
         "max-size": "10n"
@@ -44,19 +44,17 @@ services:
     user: root
     environment:
       <<: *grouper_environment
-    logging:
-      <<: *container_logging
-    volumes: *grouper_vols
-
+    volumes:
+      - tls-keypairs:/opt/keypairs:ro
+      - /home/grouper/grouper/logs:/opt/grouper/logs
   daemon:
     image: *grouper_image
     command: daemon
     user: root
     environment:
       <<: *grouper_environment
-    logging:
-      <<: *container_logging
-    volumes: *grouper_vols
-
+    volumes:
+      - tls-keypairs:/opt/keypairs:ro
+      - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:
   tls-keypairs:
