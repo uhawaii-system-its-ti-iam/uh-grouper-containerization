@@ -14,11 +14,11 @@ build-job:       # Build job.
   variables:
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
-    IMAGE_TAG_ID: 29
+    # Bump up the index here and in stack.yml to trigger a new deployment.
+    IMAGE_TAG_ID: 30
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
-    # Bump up the index to trigger a new deployment.
     DEPLOY_TAG: $IMAGE_NAME-$IMAGE_TAG_ID
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001

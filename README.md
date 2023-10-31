@@ -1,5 +1,5 @@
 # Grouper
-Utilizes Podman and Portainer for containerization and orchestration.
+Utilizes Podman, GitLab and Portainer for containerization and orchestration.
 
 ## Upgrading Grouper
 The following files need to be updated in order for the Grouper version to match the image
@@ -7,7 +7,7 @@ names.  When change Grouper versions, reset the DEPLOY_TAG to 0.
 
 - build.args
 - .gitlab-ci.yml
-- portainer/stack
+- portainer/stack.yml
 
 ## Triggering a Build
 
