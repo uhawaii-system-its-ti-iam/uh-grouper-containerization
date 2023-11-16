@@ -1,3 +1,5 @@
+# Build the Grouper images and a Grouper logrotate image.
+#
 # GitLab pipeline build configuration.
 # - ref: https://docs.gitlab.com/ee/ci/yaml/
 # - See /portainer/slack.yml for the deployment configuration.
@@ -5,21 +7,28 @@
 # Deployment is triggered by changing portainer/stack.yml. Be sure to
 # bump up the image file deploy tag index by +1 here and in stack.yml
 # before committing the changes back to the repository.
-stages:          # Stage the jobs.
+#
+stages:
   - build
 
-build-job:       # Build job.
+build-job:
   image: quay.io/buildah/stable
   stage: build
   variables:
+    # --- Grouper ---
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Bump up the index here and in stack.yml to trigger a new deployment.
-    IMAGE_TAG_ID: 32
+    IMAGE_TAG_ID: 33
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
     DEPLOY_TAG: $IMAGE_NAME-$IMAGE_TAG_ID
+    # --- Logrotate ---
+    # Also update Dockerfile-logrotate if the image name changes.
+    LOGROTATE_NAME: $CI_REGISTRY:5001/iam/grouper-logrotate:1.0.0
+    LOGROTATE_TAG: $LOGROTATE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
+    LOGROTATE_DEPLOY_TAG: $LOGROTATE_NAME-$IMAGE_TAG_ID
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo $CI_COMMIT_TIMESTAMP
@@ -29,3 +38,7 @@ build-job:       # Build job.
     - buildah push --tls-verify=false $IMAGE_TAG
     - buildah push --tls-verify=false $IMAGE_TAG $IMAGE_NAME-$CI_COMMIT_BRANCH-latest
     - buildah push --tls-verify=false $DEPLOY_TAG
+    - buildah bud --build-arg HOME_DIR=${HOME_DIR} -f Dockerfile-logrotate -t $LOGROTATE_NAME .
+    - buildah push --tls-verify=false $LOGROTATE_TAG
+    - buildah push --tls-verify=false $LOGROTATE_TAG $LOGROTATE_NAME-$CI_COMMIT_BRANCH-latest
+    - buildah push --tls-verify=false $LOGROTATE_DEPLOY_TAG

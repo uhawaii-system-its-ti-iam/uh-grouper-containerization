@@ -1,6 +1,12 @@
 # Grouper
 Utilizes Podman, GitLab and Portainer for containerization and orchestration.
 
+## Configuring Logrotate for Grouper
+
+The following files are used to configure the logrorate image build for Grouper:
+ - logrotate/logrotate.conf - instructions
+ - portainer/stack.yml - wiring
+
 ## Upgrading Grouper
 The following files need to be updated in order for the Grouper version to match the image
 names.  When change Grouper versions, reset the DEPLOY_TAG to 0.
