@@ -21,7 +21,7 @@ services:
       - /home/grouper/grouper/logs:/opt/grouper/logs
   ui:
     # Bump up the index to trigger a new deployment.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-33
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-34
     command: ui
     ports:
       - "8443:8443"
