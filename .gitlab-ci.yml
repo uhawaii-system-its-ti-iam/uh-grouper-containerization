@@ -19,7 +19,7 @@ build-job:
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Bump up the index here and in stack.yml to trigger a new deployment.
-    IMAGE_TAG_ID: 34
+    IMAGE_TAG_ID: 35
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
@@ -33,4 +33,3 @@ build-job:
     - buildah push --tls-verify=false $IMAGE_TAG
     - buildah push --tls-verify=false $IMAGE_TAG $IMAGE_NAME-$CI_COMMIT_BRANCH-latest
     - buildah push --tls-verify=false $DEPLOY_TAG
-    - buildah bud --build-arg HOME_DIR=${HOME_DIR} -f Dockerfile-logrotate -t $LOGROTATE_NAME .
