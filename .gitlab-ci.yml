@@ -8,7 +8,7 @@
 # bump up the image file deploy tag index by +1 here and in stack.yml
 # before committing the changes back to the repository.
 #
-version: "3.0"
+version: "3"
 stages:
   - build
 
@@ -19,7 +19,7 @@ build-job:
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Bump up the index here and in stack.yml to trigger a new deployment.
-    IMAGE_TAG_ID: 38
+    IMAGE_TAG_ID: 39
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     IMAGE_TAG: $IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
