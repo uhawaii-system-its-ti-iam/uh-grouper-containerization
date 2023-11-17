@@ -7,21 +7,9 @@
 version: '3'
 
 services:
-  logrotate:
-    build: .
-    image: &logrotate_image rep90.pvt.hawaii.edu:5001/iam/grouper-logrotate:1.0.0
-    user: &user root
-    # Passed to Dockerfile-logrotate
-    environment:
-      USER: *user
-      HOME: /home/grouper
-      APP_LOGS: /opt/grouper/logs
-      LOGROTATE_IMAGE: *logrotate_image
-    volumes:
-      - /home/grouper/grouper/logs:/opt/grouper/logs
   ui:
     # Bump up the index to trigger a new deployment.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-36
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-37
     command: ui
     ports:
       - "8443:8443"
@@ -66,5 +54,17 @@ services:
       - tls-keypairs:/opt/keypairs:ro
       - /home/grouper/grouper/logs:/opt/grouper/logs
       - /home/grouper/grouper/logs:/opt/tomcat/logs
+  logrotate:
+    build: .
+    image: &logrotate_image rep90.pvt.hawaii.edu:5001/iam/grouper-logrotate:1.0.0
+    user: &user root
+    # Passed to Dockerfile-logrotate
+    environment:
+      USER: *user
+      HOME: /home/grouper
+      APP_LOGS: /opt/grouper/logs
+      LOGROTATE_IMAGE: *logrotate_image
+    volumes:
+      - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:
   tls-keypairs:
