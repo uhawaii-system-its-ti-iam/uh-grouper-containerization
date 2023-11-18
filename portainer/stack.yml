@@ -10,7 +10,7 @@ services:
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Bump up the index here and in .gitlab-ci.yml to trigger a new deployment.
-    GROUPER_TAG_ID: 42
+    GROUPER_TAG_ID: 43
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:$GROUPER_VERSION-$GROUPER_TAG_ID
     command: ui
