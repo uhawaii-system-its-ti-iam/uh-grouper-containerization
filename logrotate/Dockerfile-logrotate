@@ -24,8 +24,8 @@ COPY ../mailx/.mailrc /${HOME}/.mailrc
 RUN mkdir -p ${APP_LOGS}
 RUN chmod -R 750 ${APP_LOGS}
 
-COPY ../logrotate/logrotate.conf ${LOGROTATE_CONFIG}
-COPY ../logrotate/logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
+COPY logrotate.conf ${LOGROTATE_CONFIG}
+COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
 
 # Adjust file access.
 RUN chown ${USER}:${USER} ${CRONTAB}
