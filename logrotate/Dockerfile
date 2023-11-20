@@ -1,11 +1,11 @@
-## Dockerfile-logrotate
+## Dockerfile
 #
 # Passed from stack.yml.
 ARG USER
 ARG HOME
 ARG APP_LOGS
 
-FROM alpine:latest
+FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0
 
 ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf \
     LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh \
