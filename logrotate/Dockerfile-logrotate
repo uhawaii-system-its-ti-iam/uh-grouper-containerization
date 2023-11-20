@@ -14,7 +14,7 @@ ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf \
     CRONTAB=/var/spool/cron/grouper \
     TMP_WORK_FILE=/tmp/build/cronjob_settings.tmp
 
-COPY ../mailx/.mailrc /${HOME}/.mailrc
+COPY .mailrc /${HOME}/.mailrc
 COPY logrotate.conf ${LOGROTATE_CONFIG}
 COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
 
