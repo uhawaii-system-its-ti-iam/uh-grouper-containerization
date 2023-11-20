@@ -5,7 +5,7 @@ ARG USER
 ARG HOME
 ARG APP_LOGS
 
-FROM rockylinux:latest
+FROM alpine:latest
 
 ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf \
     LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh \
