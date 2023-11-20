@@ -19,10 +19,10 @@ COPY logrotate.conf ${LOGROTATE_CONFIG}
 COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
 
 # Log directories and permissions.
-RUN mkdir -p ${APP_LOGS} && \
-    chmod -R 750 ${APP_LOGS} && \
-    chown ${USER}:${USER} ${CRONTAB} && \
-    chmod +x ${LOGROTATE_WRAPPER}
+RUN mkdir -p ${APP_LOGS}
+RUN chmod -R 750 ${APP_LOGS}
+RUN chown ${USER}:${USER} ${CRONTAB}
+RUN chmod +x ${LOGROTATE_WRAPPER}
 
 # CRON settings.
 RUN echo "MAILTO=${MAILTO}" > ${TMP_WORK_FILE} && \
