@@ -10,7 +10,7 @@ services:
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Bump up the index here and in .gitlab-ci.yml to trigger a new deployment.
-    GROUPER_TAG_ID: 43
+    GROUPER_TAG_ID: 44
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:$GROUPER_VERSION-$GROUPER_TAG_ID
     command: ui
@@ -58,7 +58,6 @@ services:
       - /home/grouper/grouper/logs:/opt/grouper/logs
       - /home/grouper/grouper/logs:/opt/tomcat/logs
   logrotate:
-    build: .
     image: &logrotate_image rep90.pvt.hawaii.edu:5001/iam/grouper-logrotate:1.0.0
     user: &user root
     # Passed to Dockerfile-logrotate
@@ -66,7 +65,6 @@ services:
       USER: *user
       HOME: /home/grouper
       APP_LOGS: /opt/grouper/logs
-      LOGROTATE_IMAGE: *logrotate_image
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:
