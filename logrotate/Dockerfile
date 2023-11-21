@@ -15,8 +15,8 @@ ENV TMP_WORK_FILE="/tmp/build/cronjob_settings.tmp"
 
 # Directories and permissions.
 RUN mkdir -p ${HOME}
-#RUN chmod -R 750 ${HOME}
-#RUN mkdir -p ${APP_LOGS}
+RUN chmod -R 750 ${HOME}
+RUN mkdir -p ${APP_LOGS}
 #RUN chmod -R 750 ${APP_LOGS}
 #RUN chown ${USER}:${USER} ${CRONTAB}
 #RUN chmod +x ${LOGROTATE_WRAPPER}
