@@ -12,7 +12,8 @@ ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
 
 COPY .mailrc /${HOME}/.mailrc
 COPY logrotate.conf ${LOGROTATE_CONFIG}
-COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
+#COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
+COPY logrotate-wrapper.sh /home/grouper/bin/logrotate-wrapper.sh
 COPY logrotate.cron ${CRONTAB}
 
 RUN rm -fr /var/cache/yum/* && yum clean all
