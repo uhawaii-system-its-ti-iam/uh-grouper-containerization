@@ -18,14 +18,16 @@ COPY logrotate.cron ${CRONTAB}
 RUN rm -fr /var/cache/yum/* && yum clean all
 RUN yum update -y && yum install -y mailx logrotate
 
-RUN echo "1" ${HOME}
-RUN echo "2" ${APP_LOGS}
-RUN echo "3" ${USER}
-RUN echo "4" ${CRONTAB}
+#RUN mkdir -p ${HOME}
+#RUN chmod -R 750 ${HOME}
+#RUN #mkdir -p ${APP_LOGS}
+#RUN #chmod -R 750 ${APP_LOGS}
+#RUN chmod +x ${LOGROTATE_WRAPPER}
+#RUN chown ${USER}:${USER} ${CRONTAB}
 
-RUN mkdir -p ${HOME}
-RUN chmod -R 750 ${HOME}
-RUN #mkdir -p ${APP_LOGS}
-RUN #chmod -R 750 ${APP_LOGS}
-RUN chmod +x ${LOGROTATE_WRAPPER}
-RUN chown ${USER}:${USER} ${CRONTAB}
+RUN mkdir -p /home/grouper
+RUN chmod -R /home/grouper
+RUN mkdir -p /opt/grouper/logs
+RUN chmod -R 750 /opt/grouper/logs
+RUN chmod +x /home/grouper/bin/logrotate-wrapper.sh
+RUN chown $root:root /var/spool/cron/logrotate.cron
