@@ -18,6 +18,11 @@ COPY logrotate.cron ${CRONTAB}
 RUN rm -fr /var/cache/yum/* && yum clean all
 RUN yum update -y && yum install -y mailx logrotate
 
+RUN echo "1" ${HOME}
+RUN echo "2" ${APP_LOGS}
+RUN echo "3" ${USER}
+RUN echo "4" ${CRONTAB}
+
 RUN mkdir -p ${HOME}
 RUN chmod -R 750 ${HOME}
 RUN #mkdir -p ${APP_LOGS}
