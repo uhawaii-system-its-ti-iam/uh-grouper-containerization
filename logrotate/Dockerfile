@@ -2,7 +2,7 @@
 
 ENV USER=root
 ENV HOME=/home/grouper
-ENV APP_LOGS=/opt/grouper/logs
+#ENV APP_LOGS=/opt/grouper/logs
 ENV CRONTAB=/var/spool/cron/logrotate.cron
 
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0
@@ -20,7 +20,7 @@ RUN yum update -y && yum install -y mailx logrotate
 
 RUN mkdir -p ${HOME}
 RUN chmod -R 750 ${HOME}
-RUN mkdir -p ${APP_LOGS}
-RUN chmod -R 750 ${APP_LOGS}
+RUN #mkdir -p ${APP_LOGS}
+RUN #chmod -R 750 ${APP_LOGS}
 RUN chmod +x ${LOGROTATE_WRAPPER}
 RUN chown ${USER}:${USER} ${CRONTAB}
