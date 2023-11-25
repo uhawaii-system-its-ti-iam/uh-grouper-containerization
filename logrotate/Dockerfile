@@ -1,22 +1,25 @@
 ## Dockerfile
 
-ENV USER=root
-ENV HOME=/home/grouper
+#ENV USER=root
+#ENV HOME=/home/grouper
 #ENV APP_LOGS=/opt/grouper/logs
-ENV CRONTAB=/var/spool/cron/logrotate.cron
+#ENV CRONTAB=/var/spool/cron/logrotate.cron
 
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0
 
-ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
-ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
+#ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
+#ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
 
-COPY .mailrc /${HOME}/.mailrc
-COPY logrotate.conf ${LOGROTATE_CONFIG}
+#COPY .mailrc /${HOME}/.mailrc
+COPY .mailrc /home/grouper/.mailrc
+#COPY logrotate.conf ${LOGROTATE_CONFIG}
+COPY logrotate.conf /home/grouper/etc/logrotate.conf
 #COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
 COPY logrotate-wrapper.sh /home/grouper/bin/logrotate-wrapper.sh
-COPY logrotate.cron ${CRONTAB}
+#COPY logrotate.cron ${CRONTAB}
+COPY logrotate.cron /var/spool/cron/logrotate.cron
 
-RUN rm -fr /var/cache/yum/* && yum clean all
+#RUN rm -fr /var/cache/yum/* && yum clean all
 RUN yum update -y && yum install -y mailx logrotate
 
 #RUN mkdir -p ${HOME}
