@@ -7,12 +7,12 @@
 # the stack.yml file.
 services:
   ui:
+    # Bump up the index here and in .gitlab-ci.yml to trigger a new deployment.
+    DEPLOY_ID: 72
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
-    # Bump up the index here and in .gitlab-ci.yml to trigger a new deployment.
-    GROUPER_TAG_ID: 71
     # Also update build.gradle & portainer/stack.yml if the image name changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:$GROUPER_VERSION-$GROUPER_TAG_ID
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:$GROUPER_VERSION-$DEPLOY_ID
     command: ui
     ports:
       - "8443:8443"
@@ -59,8 +59,8 @@ services:
       - /home/grouper/grouper/logs:/opt/tomcat/logs
   logrotate:
     image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0
-    user: &USER root
-    command: crontab -u ${USER} /var/spool/cron/logrotate.cron
+    user: root
+    command: crontab -u root /var/spool/cron/logrotate.cron
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:

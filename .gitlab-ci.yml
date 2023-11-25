@@ -15,28 +15,28 @@ build-job:
   image: quay.io/buildah/stable
   stage: build
   variables:
+    # Bump up the index here and in stack.yml to trigger a new deployment.
+    DEPLOY_ID: 72
     ## Grouper ##
     # Also update portainer/stack.yml if the grouper version changes.
     GROUPER_VERSION: 4.2.0
-    # Bump up the index here and in stack.yml to trigger a new deployment.
-    GROUPER_TAG_ID: 71
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     GROUPER_IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     GROUPER_IMAGE_TAG: $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
-    GROUPER_DEPLOY_TAG: $GROUPER_IMAGE_NAME-$GROUPER_TAG_ID
+    GROUPER_DEPLOY_ID: $GROUPER_IMAGE_NAME-$DEPLOY_ID
     ## logrotate ##
     LINUX_IMAGE: quay.io/rockylinux/rockylinux:latest
-    LOGROTATE_IMAGE: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:1.0.0-$GROUPER_TAG_ID
+    LOGROTATE_IMAGE: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:1.0.0-$DEPLOY_ID
 
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo $CI_COMMIT_TIMESTAMP
     - buildah bud --build-arg-file=build.args -t $GROUPER_IMAGE_TAG .
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-latest
-    - buildah tag $GROUPER_IMAGE_TAG $GROUPER_DEPLOY_TAG
+    - buildah tag $GROUPER_IMAGE_TAG $GROUPER_DEPLOY_ID
     - buildah push --tls-verify=false $GROUPER_IMAGE_TAG
     - buildah push --tls-verify=false $GROUPER_IMAGE_TAG $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-latest
-    - buildah push --tls-verify=false $GROUPER_DEPLOY_TAG
+    - buildah push --tls-verify=false $GROUPER_DEPLOY_ID
     - buildah pull $LINUX_IMAGE
     - buildah tag $LINUX_IMAGE $LOGROTATE_IMAGE
     - buildah bud -t $LOGROTATE_IMAGE logrotate/Dockerfile
