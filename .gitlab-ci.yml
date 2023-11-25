@@ -16,7 +16,7 @@ build-job:
   stage: build
   variables:
     # Bump the index here and in stack.yml to trigger a new deployment.
-    DEPLOY_ID: 73
+    DEPLOY_ID: 74
     # Also update build.args if the Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Also update build.gradle & portainer/stack.yml if the image name changes.
@@ -25,7 +25,9 @@ build-job:
     GROUPER_DEPLOY_ID: $GROUPER_IMAGE_NAME-$DEPLOY_ID
     ## logrotate ##
     LINUX_IMAGE: quay.io/rockylinux/rockylinux:latest
-    LOGROTATE_IMAGE: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:1.0.0-$DEPLOY_ID
+    LOGROTATE_IMAGE: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:1.0.0
+    LOGROTATE_LATEST: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:latest
+    LOGROTATE_DEPLOY_ID: $LOGROTATE_IMAGE-$DEPLOY_ID
 
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
@@ -39,4 +41,8 @@ build-job:
     - buildah pull $LINUX_IMAGE
     - buildah tag $LINUX_IMAGE $LOGROTATE_IMAGE
     - buildah bud -t $LOGROTATE_IMAGE logrotate/Dockerfile
+    - buildah tag $LOGROTATE_IMAGE $LOGROTATE_LATEST
+    - buildah tag $LOGROTATE_IMAGE $LOGROTATE_DEPLOY_ID
     - buildah push --tls-verify=false $LOGROTATE_IMAGE
+    - buildah push --tls-verify=false $LOGROTATE_IMAGE_LATEST
+    - buildah push --tls-verify=false $LOGROTATE_DEPLOY_ID

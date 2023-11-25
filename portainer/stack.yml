@@ -11,7 +11,7 @@ services:
   ui:
     environment: &grouper_environment
       # Bump the index here and in .gitlab-ci.yml.
-      DEPLOY_ID: 73
+      DEPLOY_ID: 74
       # Also update build.args if the Grouper version changes.
       GROUPER_VERSION: 4.2.0
       # Grouper settings.
