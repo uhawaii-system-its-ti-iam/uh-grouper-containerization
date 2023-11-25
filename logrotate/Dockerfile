@@ -33,5 +33,5 @@ RUN mkdir -p /home/grouper
 RUN chmod -R 750 /home/grouper
 RUN mkdir -p /opt/grouper/logs
 RUN chmod -R 750 /opt/grouper/logs
-#RUN chmod +x /home/grouper/bin/logrotate-wrapper.sh
+RUN chmod +x /home/grouper/bin/logrotate-wrapper.sh
 #RUN chown root:root /var/spool/cron/logrotate.cron
