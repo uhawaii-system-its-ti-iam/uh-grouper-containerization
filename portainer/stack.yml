@@ -1,8 +1,8 @@
 # portainer/stack.yml
 #
-##-DEPLOY-##
+##>-DEPLOY-<##
 # See the DEPLOY sections below.
-##--------##
+##>--------<##
 #
 # Docker Compose files (which Portainer utilizes for stacks) do not natively
 # support variable interpolation or substitution within image names.
@@ -23,11 +23,11 @@ services:
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-    ##-DEPLOY-##
+    ##>-DEPLOY-<##
     # Bump the index here and in .gitlab-ci.yml.
     # Also update build.args if the Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-78
-    ##--------##
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-79
+    ##>--------<##
     command: ui
     ports:
       - "8443:8443"
@@ -61,10 +61,10 @@ services:
   logrotate:
     environment:
       <<: *grouper_environment
-    ##-DEPLOY-##
+    ##>-DEPLOY-<##
     # Bump the index here and in .gitlab-ci.yml.
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-78
-    ##--------##
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-79
+    ##>--------<##
     user: root
     command: crontab -u root /var/spool/cron/logrotate.cron
     volumes:
