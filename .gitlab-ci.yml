@@ -1,3 +1,5 @@
+# .gotlab-ci.yml - GitLab pipeline image build instructions.
+
 # Build the Grouper images. See stack.yml for logrotate build.
 #
 # GitLab pipeline build configuration.
@@ -16,7 +18,7 @@ build-job:
   stage: build
   variables:
     # Bump the index here and in stack.yml to trigger a new deployment.
-    DEPLOY_ID: 80
+    DEPLOY_ID: 81
     # Also update build.args if the Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Also update build.gradle & portainer/stack.yml if the image name changes.

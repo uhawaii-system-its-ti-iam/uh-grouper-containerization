@@ -1,8 +1,6 @@
-# portainer/stack.yml
+# portainer/stack.yml - Portainer container deployment instructions
 #
-##>-DEPLOY-<##
-# See the DEPLOY sections below.
-##>--------<##
+## DEPLOY - see the 2 DEPLOY sections below for triggering new deployments
 #
 # Docker Compose files (which Portainer utilizes for stacks) do not natively
 # support variable interpolation or substitution within image names.
@@ -23,11 +21,9 @@ services:
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-    ##>-DEPLOY-<##
-    # Bump the index here and in .gitlab-ci.yml.
+    ## DEPLOY (1) - bump the index here and in gitlab-ci.yml
     # Also update build.args if the Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-80
-    ##>--------<##
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-81
     command: ui
     ports:
       - "8443:8443"
@@ -59,14 +55,10 @@ services:
       - /home/grouper/grouper/logs:/opt/grouper/logs
       - /home/grouper/grouper/logs:/opt/tomcat/logs
   logrotate:
-    environment:
-      <<: *grouper_environment
-    ##>-DEPLOY-<##
-    # Bump the index here and in .gitlab-ci.yml.
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-80
-    ##>--------<##
+    ## DEPLOY (2) - bump the index
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-81
     user: root
-#    command: crontab -u root /var/spool/cron/logrotate.cron
+#    command: crontab -u root /home/grouper/cron/logrotate.cron
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:

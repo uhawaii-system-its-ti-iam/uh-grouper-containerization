@@ -1,4 +1,4 @@
-## Dockerfile
+## logrorate/Dockerfile - configure the logrotate image
 
 #ENV USER=root
 #ENV HOME=/home/grouper
@@ -12,12 +12,19 @@ FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
 
 #COPY .mailrc /${HOME}/.mailrc
 COPY .mailrc /home/grouper/.mailrc
+RUN ls -l /home/grouper/.mailrc
+
 #COPY logrotate.conf ${LOGROTATE_CONFIG}
 COPY logrotate.conf /home/grouper/etc/logrotate.conf
+RUN ls -l /home/grouper/etc/logrotate.conf
+
 #COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
 COPY logrotate-wrapper.sh /home/grouper/bin/logrotate-wrapper.sh
+RUN ls -l /home/grouper/bin/logrotate-wrapper.sh
+
 #COPY logrotate.cron ${CRONTAB}
 COPY logrotate.cron /var/spool/cron/logrotate.cron
+RUN ls -l /home/grouper/cron/logrotate.cron
 
 RUN yum update -y && yum install -y mailx logrotate cronie
 
@@ -33,4 +40,4 @@ RUN chmod -R 750 /home/grouper
 RUN mkdir -p /opt/grouper/logs
 RUN chmod -R 750 /opt/grouper/logs
 RUN chmod +x /home/grouper/bin/logrotate-wrapper.sh
-#RUN chown root:root /var/spool/cron/logrotate.cron
+#RUN chown root:root /home/grouper/cron/logrotate.cron
