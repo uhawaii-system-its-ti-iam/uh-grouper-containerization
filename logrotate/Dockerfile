@@ -6,6 +6,7 @@
 #ENV CRONTAB=/var/spool/cron/logrotate.cron
 
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
+RUN yum update -y && yum install -y mailx logrotate cronie
 
 #ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
 #ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
@@ -23,10 +24,9 @@ COPY logrotate-wrapper.sh /home/grouper/bin/logrotate-wrapper.sh
 RUN ls -l /home/grouper/bin/logrotate-wrapper.sh
 
 #COPY logrotate.cron ${CRONTAB}
-COPY logrotate.cron /home/grouper/cron/logrotate.cron
-RUN ls -l /home/grouper/cron/logrotate.cron
-
-RUN yum update -y && yum install -y mailx logrotate cronie
+COPY logrotate.cron /etc/cron.d/logrotate-cron
+RUN chmod 0644 /etc/cron.d/logrotate-cron
+RUN ls -l /etc/cron.d/logrotate-cron
 
 #RUN mkdir -p ${HOME}
 #RUN chmod -R 750 ${HOME}
