@@ -26,7 +26,7 @@ services:
     ##>-DEPLOY-<##
     # Bump the index here and in .gitlab-ci.yml.
     # Also update build.args if the Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-79
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-80
     ##>--------<##
     command: ui
     ports:
@@ -63,10 +63,10 @@ services:
       <<: *grouper_environment
     ##>-DEPLOY-<##
     # Bump the index here and in .gitlab-ci.yml.
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-79
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-80
     ##>--------<##
     user: root
-    command: crontab -u root /var/spool/cron/logrotate.cron
+#    command: crontab -u root /var/spool/cron/logrotate.cron
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:
