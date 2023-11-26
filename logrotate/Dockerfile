@@ -23,7 +23,7 @@ COPY logrotate-wrapper.sh /home/grouper/bin/logrotate-wrapper.sh
 RUN ls -l /home/grouper/bin/logrotate-wrapper.sh
 
 #COPY logrotate.cron ${CRONTAB}
-COPY logrotate.cron /var/spool/cron/logrotate.cron
+COPY logrotate.cron /home/grouper/cron/logrotate.cron
 RUN ls -l /home/grouper/cron/logrotate.cron
 
 RUN yum update -y && yum install -y mailx logrotate cronie
@@ -36,8 +36,8 @@ RUN yum update -y && yum install -y mailx logrotate cronie
 #RUN chown ${USER}:${USER} ${CRONTAB}
 
 RUN mkdir -p /home/grouper
+RUN chown root:root /home/grouper
 RUN chmod -R 750 /home/grouper
 RUN mkdir -p /opt/grouper/logs
 RUN chmod -R 750 /opt/grouper/logs
 RUN chmod +x /home/grouper/bin/logrotate-wrapper.sh
-#RUN chown root:root /home/grouper/cron/logrotate.cron
