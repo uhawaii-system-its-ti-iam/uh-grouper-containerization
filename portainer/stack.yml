@@ -1,23 +1,14 @@
-# The stack.yml file defines the services that Portainer will deploy and
-# manage. The images must already be in the repository.
-# - See .gitlab-ci.yml for the pipeline build configuration.
+# portainer/stack.yml
 #
-# Image deployment by Portainer is triggered by changing .gitlab-ci.yml. Be
-# sure to bump up the image file index deploy tag index by +1 here and in
-# the stack.yml file.
+##-DEPLOY-##
+# See the DEPLOY sections below.
+##--------##
 #
-# Also update portainer/stack.yml if the grouper version changes.
-#
-# WARNING: Docker Compose files (which Portainer utilizes for stacks) do not
-#          natively support variable interpolation or substitution within image
-#          names.
+# Docker Compose files (which Portainer utilizes for stacks) do not natively
+# support variable interpolation or substitution within image names.
 services:
   ui:
     environment: &grouper_environment
-      # Bump the index here and in .gitlab-ci.yml.
-      DEPLOY_ID: &deploy_id_anchor 77
-      # Also update build.args if the Grouper version changes.
-#      GROUPER_VERSION: 4.2.0
       # Grouper settings.
       GROUPER_DATABASE_URL: ${GROUPER_DATABASE_URL}
       GROUPER_DATABASE_USERNAME: ${GROUPER_DATABASE_USERNAME}
@@ -32,8 +23,11 @@ services:
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-#     image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:${GROUPER_VERSION}-${DEPLOY_ID}
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-${DEPLOY_ID}
+    ##-DEPLOY-##
+    # Bump the index here and in .gitlab-ci.yml.
+    # Also update build.args if the Grouper version changes.
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-78
+    ##--------##
     command: ui
     ports:
       - "8443:8443"
@@ -67,8 +61,10 @@ services:
   logrotate:
     environment:
       <<: *grouper_environment
-#    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-${DEPLOY_ID}
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-${DEPLOY_ID}
+    ##-DEPLOY-##
+    # Bump the index here and in .gitlab-ci.yml.
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-78
+    ##--------##
     user: root
     command: crontab -u root /var/spool/cron/logrotate.cron
     volumes:
