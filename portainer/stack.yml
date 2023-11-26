@@ -11,7 +11,7 @@ services:
   ui:
     environment: &grouper_environment
       # Bump the index here and in .gitlab-ci.yml.
-      DEPLOY_ID: 75
+#      DEPLOY_ID: 75
       # Also update build.args if the Grouper version changes.
       GROUPER_VERSION: 4.2.0
       # Grouper settings.
@@ -28,7 +28,8 @@ services:
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:${GROUPER_VERSION}-${DEPLOY_ID}
+#     image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:${GROUPER_VERSION}-${DEPLOY_ID}
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-76
     command: ui
     ports:
       - "8443:8443"
@@ -62,7 +63,8 @@ services:
   logrotate:
     environment:
       <<: *grouper_environment
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-${DEPLOY_ID}
+#    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-${DEPLOY_ID}
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-76
     user: root
     command: crontab -u root /var/spool/cron/logrotate.cron
     volumes:
