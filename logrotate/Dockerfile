@@ -1,51 +1,44 @@
 # logrorate/Dockerfile - configure the logrotate image
 #
-# Enable email to the IAM team.
+# Features include daily log rotation and email to the IAM team.
 #
-# To verify that cron is running on Rocky Linux:
+# To verify that cron is running on Rocky Linux not running systemd:
 # $ ps aux | grep cron
 #
-# The commented-out RUN ls statements are for debugging.
+# The commented-out "RUN ls" statements below are for debugging.
 
-#ENV USER=root
+ENV USER=root
 ENV HOME=/home/grouper
-#ENV APP_LOGS=/opt/grouper/logs
+ENV LOGS=/opt/grouper/logs
 
-#ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
-#ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
-
-RUN mkdir -p ${HOME}
-RUN chown root:root ${HOME}
-RUN chmod -R 750 ${HOME}
-#RUN #mkdir -p ${APP_LOGS}
-#RUN #chmod -R 750 ${APP_LOGS}
-#RUN chmod +x ${LOGROTATE_WRAPPER}
-#RUN chown ${USER}:${USER} ${CRONTAB}
+ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
+ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
+ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
 RUN yum update -y && yum install -y mailx logrotate cronie
 
-#RUN mkdir -p /home/grouper
-#RUN chown root:root /home/grouper
-#RUN chmod 0750 /home/grouper
+# Set up home directory.
+RUN mkdir -p ${HOME}
+RUN chown ${USER}:${USER} ${HOME}
+RUN chmod -R 0750 ${HOME}
 
-# The volume mounted by the Grouper containers for their logs.
-RUN mkdir -p /opt/grouper/logs
-RUN chmod -R 0750 /opt/grouper/logs
+# Maps volume mounted by the Grouper containers for their logs.
+RUN mkdir -p ${LOGS}
+RUN chmod -R 0750 ${LOGS}
 
 COPY .mailrc ${HOME}/.mailrc
-#COPY .mailrc /home/grouper/.mailrc
 #RUN ls -l /home/grouper/.mailrc
 
-#COPY logrotate.conf ${LOGROTATE_CONFIG}
-COPY logrotate.conf /home/grouper/etc/logrotate.conf
+COPY logrotate.conf ${LOGROTATE_CONFIG}
 #RUN ls -l /home/grouper/etc/logrotate.conf
 
-#COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
-COPY logrotate-wrapper.sh /home/grouper/bin/logrotate-wrapper.sh
+COPY logrotate-wrapper.sh ${LOGROTATE_WRAPPER}
 #RUN ls -l /home/grouper/bin/logrotate-wrapper.sh
-RUN chmod +x /home/grouper/bin/logrotate-wrapper.sh
+RUN chmod +x ${LOGROTATE_WRAPPER}
 
-COPY logrotate-cronjob /etc/cron.d/logrotate-cronjob
+COPY logrotate-cronjob ${LOGROTATE_CRONJOB}
 #RUN ls -l /etc/cron.d/logrotate-cronjob
-RUN chmod 0644 /etc/cron.d/logrotate-cronjob
+RUN chmod 0644 ${LOGROTATE_CRONJOB}
+
+# cron will be started up in portainer/stack.yml
