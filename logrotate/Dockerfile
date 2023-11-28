@@ -18,7 +18,7 @@ ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
 RUN yum update -y && yum install -y mailx logrotate cronie
 
-RUN echo "Value of grouper home is ( GROUPER_HOME )."
+RUN echo "Value of grouper home is ( $GROUPER_HOME )."
 
 # Set up home directory.
 RUN mkdir -p ${GROUPER_HOME}
