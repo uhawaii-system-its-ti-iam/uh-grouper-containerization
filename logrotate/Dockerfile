@@ -7,9 +7,9 @@
 #
 # The commented-out "RUN ls" statements below are for debugging.
 
-ENV USER=root
-ENV HOME=/home/grouper
-ENV LOGS=/opt/grouper/logs
+ENV GROUPER_USER=root
+ENV GROUPER_HOME=/home/grouper
+ENV GROUPER_LOGS=/opt/grouper/logs
 
 ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
 ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
@@ -19,15 +19,16 @@ FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
 RUN yum update -y && yum install -y mailx logrotate cronie
 
 # Set up home directory.
-RUN mkdir -p ${HOME}
-RUN chown ${USER}:${USER} ${HOME}
-RUN chmod -R 0750 ${HOME}
+RUN mkdir -p ${GROUPER_HOME}
+RUN chown ${GROUPER_USER}:${GROUPER_USER} ${GROUPER_HOME}
+RUN chmod -R 0750 ${GROUPER_HOME}
 
 # Maps volume mounted by the Grouper containers for their logs.
-RUN mkdir -p ${LOGS}
-RUN chmod -R 0750 ${LOGS}
+RUN mkdir -p ${GROUPER_LOGS}
+RUN mkdir -p ${GROUPER_LOGS}
+RUN chmod -R 0750 ${GROUPER_LOGS}
 
-COPY .mailrc ${HOME}/.mailrc
+COPY .mailrc ${GROUPER_HOME}/.mailrc
 #RUN ls -l /home/grouper/.mailrc
 
 COPY logrotate.conf ${LOGROTATE_CONFIG}
