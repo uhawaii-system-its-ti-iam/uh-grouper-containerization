@@ -7,13 +7,15 @@
 #
 # The commented-out "RUN ls" statements below are for debugging.
 
-ENV GROUPER_USER="root"
-ENV GROUPER_HOME="/home/grouper"
-ENV GROUPER_LOGS="/opt/grouper/logs"
+ENV GROUPER_USER=root
+ENV GROUPER_HOME=/home/grouper
+ENV GROUPER_LOGS=/opt/grouper/logs
 
-ENV LOGROTATE_CONFIG="${HOME}/etc/logrotate.conf"
-ENV LOGROTATE_WRAPPER="${HOME}/bin/logrotate-wrapper.sh"
-ENV LOGROTATE_CRONJOB="/etc/cron.d/logrotate-cronjob"
+ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
+ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
+ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
+
+RUN echo "Value of grouper user is ( $GROUPER_USER )."
 
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
 RUN yum update -y && yum install -y mailx logrotate cronie
