@@ -7,18 +7,21 @@
 #
 # The commented-out "RUN ls" statements below are for debugging.
 
+# Start a new image build based on an existing image.
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
 
+# Define the needed environmental variables for new image build.
 ENV GROUPER_USER=root
-ENV GROUPER_HOME="/home/grouper"
+ENV GROUPER_HOME=/home/grouper
 ENV GROUPER_LOGS=/opt/grouper/logs
 
 ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
 ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
 ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 
-RUN echo "Value of grouper home is ( $GROUPER_HOME )."
+RUN echo "Grouper home: $GROUPER_HOME"
 
+# Augment the minimal Rocky Linux OS.
 RUN yum update -y && yum install -y mailx logrotate cronie
 
 # Set up home directory.
