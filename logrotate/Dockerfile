@@ -8,7 +8,6 @@
 # The commented-out "RUN ls" statements below are for debugging.
 
 FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
-RUN yum update -y && yum install -y mailx logrotate cronie
 
 ENV GROUPER_USER=root
 ENV GROUPER_HOME="/home/grouper"
@@ -19,6 +18,8 @@ ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
 ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 
 RUN echo "Value of grouper home is ( $GROUPER_HOME )."
+
+RUN yum update -y && yum install -y mailx logrotate cronie
 
 # Set up home directory.
 RUN mkdir -p ${GROUPER_HOME}
