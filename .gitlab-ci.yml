@@ -4,8 +4,6 @@
 # bump up the image file deploy tag index by +1 here and in stack.yml
 # before committing the changes back to the repository.
 #
-version: '3'
-
 stages:
   - build
 
@@ -14,7 +12,7 @@ build-job:
   stage: build
   variables:
     # Bump the index here and in stack.yml to trigger a new deployment.
-    DEPLOY_ID: 94
+    DEPLOY_ID: 95
     # Also update build.args if the Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Also update build.gradle & portainer/stack.yml if the image name changes.
