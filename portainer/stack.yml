@@ -1,10 +1,11 @@
 # portainer/stack.yml - Portainer container deployment instructions
 #
-# To deploy: see the 2 DEPLOY sections below for triggering new deployments.
+# To deploy: see the 2 BUMP sections below for triggering new deployments.
+#            For example, bump ...-20 to ...-21.
 #
-# Docker Compose files (which Portainer utilizes for stacks) do not natively
-# support variable interpolation or substitution within image names. YAML
-# anchors don't work either.
+# Note: Docker Compose files (which Portainer utilizes for stacks) do not
+# natively support variable interpolation or substitution within image names.
+# YAML anchors don't work either.
 services:
   ui:
     environment: &grouper_environment
@@ -22,9 +23,9 @@ services:
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-    ## DEPLOY (1) - bump the index here and in gitlab-ci.yml
-    # Also update build.args if the Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-100
+    ## BUMP 1 - bump the index here and in gitlab-ci.yml
+    #           Update build.args & .gilab-ci.yml for Grouper version changes.
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-101
     command: ui
     ports:
       - "8443:8443"
@@ -43,9 +44,6 @@ services:
     user: *grouper_user
     volumes:
       *grouper_volumes
-#      - tls-keypairs:/opt/keypairs:ro
-#      - /home/grouper/grouper/logs:/opt/grouper/logs
-#      - /home/grouper/grouper/logs:/opt/tomcat/logs
   daemon:
     environment:
       <<: *grouper_environment
@@ -54,12 +52,9 @@ services:
     user: *grouper_user
     volumes:
       *grouper_volumes
-  #      - tls-keypairs:/opt/keypairs:ro
-  #      - /home/grouper/grouper/logs:/opt/grouper/logs
-  #      - /home/grouper/grouper/logs:/opt/tomcat/logs
   logrotate:
-    ## DEPLOY (2) - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-100
+    ## BUMP 2 - bump the index
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-101
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:

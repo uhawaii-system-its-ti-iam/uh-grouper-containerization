@@ -12,8 +12,8 @@ build-job:
   stage: build
   variables:
     # Bump the index here and in stack.yml to trigger a new deployment.
-    DEPLOY_ID: 100
-    # Also update build.args if the Grouper version changes.
+    DEPLOY_ID: 101
+    # Update build.args & stack.yml for Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     GROUPER_IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION

@@ -1,3 +1,4 @@
-# Invoked by the Gradle build process.
+# build.args - Invoked by the Gradle build process.
 
+# Update .gitlab-ci.yml & portainer/stack.yml for version changes.
 GROUPER_VERSION=4.2.0
