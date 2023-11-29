@@ -24,7 +24,7 @@ services:
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     ## DEPLOY (1) - bump the index here and in gitlab-ci.yml
     # Also update build.args if the Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-99
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-100
     command: ui
     ports:
       - "8443:8443"
@@ -42,7 +42,7 @@ services:
       - "9443:8443"
     user: *grouper_user
     volumes:
-      <<: *grouper_volumes
+      *grouper_volumes
 #      - tls-keypairs:/opt/keypairs:ro
 #      - /home/grouper/grouper/logs:/opt/grouper/logs
 #      - /home/grouper/grouper/logs:/opt/tomcat/logs
@@ -53,13 +53,13 @@ services:
     command: daemon
     user: *grouper_user
     volumes:
-      <<: *grouper_volumes
+      *grouper_volumes
   #      - tls-keypairs:/opt/keypairs:ro
   #      - /home/grouper/grouper/logs:/opt/grouper/logs
   #      - /home/grouper/grouper/logs:/opt/tomcat/logs
   logrotate:
     ## DEPLOY (2) - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-99
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-100
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:
