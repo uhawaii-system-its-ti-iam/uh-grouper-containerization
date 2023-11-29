@@ -12,7 +12,7 @@ build-job:
   stage: build
   variables:
     # Bump the index here and in stack.yml to trigger a new deployment.
-    DEPLOY_ID: 96
+    DEPLOY_ID: 97
     # Also update build.args if the Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Also update build.gradle & portainer/stack.yml if the image name changes.
@@ -36,7 +36,8 @@ build-job:
     - buildah push --tls-verify=false $GROUPER_DEPLOY_ID
     - buildah pull $LINUX_IMAGE
     - buildah tag $LINUX_IMAGE $LOGROTATE_IMAGE
-    - buildah bud -t $LOGROTATE_IMAGE logrotate/Dockerfile
+#    - buildah bud -t $LOGROTATE_IMAGE logrotate/Dockerfile
+    - buildah bud --build-arg LOGROTATE_IMAGE=$LOGROTATE_IMAGE -t $LOGROTATE_IMAGE logrotate/Dockerfile
     - buildah tag $LOGROTATE_IMAGE $LOGROTATE_LATEST
     - buildah tag $LOGROTATE_IMAGE $LOGROTATE_DEPLOY_ID
     - buildah push --tls-verify=false $LOGROTATE_LATEST

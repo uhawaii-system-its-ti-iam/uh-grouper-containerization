@@ -7,8 +7,10 @@
 #
 # The commented-out "RUN ls" statements below are for debugging.
 
+ARG LOGROTATE_IMAGE
+
 # Start a new image build based on an existing image.
-FROM rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:latest
+FROM ${LOGROTATE_IMAGE}
 
 # Define the needed environmental variables for new image build.
 ENV GROUPER_USER=root
