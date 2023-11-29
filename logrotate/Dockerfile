@@ -17,8 +17,8 @@ ENV GROUPER_USER=root
 ENV GROUPER_HOME=/home/grouper
 ENV GROUPER_LOGS=/opt/grouper/logs
 
-ENV LOGROTATE_CONFIG=${HOME}/etc/logrotate.conf
-ENV LOGROTATE_WRAPPER=${HOME}/bin/logrotate-wrapper.sh
+ENV LOGROTATE_CONFIG=${GROUPER_HOME}/etc/logrotate.conf
+ENV LOGROTATE_WRAPPER=${GROUPER_HOME}/bin/logrotate-wrapper.sh
 ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 
 RUN echo "Grouper home: $GROUPER_HOME"

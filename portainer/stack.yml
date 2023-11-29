@@ -24,12 +24,12 @@ services:
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     ## DEPLOY (1) - bump the index here and in gitlab-ci.yml
     # Also update build.args if the Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-98
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-99
     command: ui
     ports:
       - "8443:8443"
-    user: &user root
-    volumes:
+    user: &grouper_user root
+    volumes: &grouper_volumes
       - tls-keypairs:/opt/keypairs:ro
       - /home/grouper/grouper/logs:/opt/grouper/logs
       - /home/grouper/grouper/logs:/opt/tomcat/logs
@@ -40,25 +40,27 @@ services:
     command: ws
     ports:
       - "9443:8443"
-    user: *user
+    user: *grouper_user
     volumes:
-      - tls-keypairs:/opt/keypairs:ro
-      - /home/grouper/grouper/logs:/opt/grouper/logs
-      - /home/grouper/grouper/logs:/opt/tomcat/logs
+      <<: *grouper_volumes
+#      - tls-keypairs:/opt/keypairs:ro
+#      - /home/grouper/grouper/logs:/opt/grouper/logs
+#      - /home/grouper/grouper/logs:/opt/tomcat/logs
   daemon:
     environment:
       <<: *grouper_environment
     image: *grouper_image
     command: daemon
-    user: *user
+    user: *grouper_user
     volumes:
-      - tls-keypairs:/opt/keypairs:ro
-      - /home/grouper/grouper/logs:/opt/grouper/logs
-      - /home/grouper/grouper/logs:/opt/tomcat/logs
+      <<: *grouper_volumes
+  #      - tls-keypairs:/opt/keypairs:ro
+  #      - /home/grouper/grouper/logs:/opt/grouper/logs
+  #      - /home/grouper/grouper/logs:/opt/tomcat/logs
   logrotate:
     ## DEPLOY (2) - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-98
-    user: *user
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-99
+    user: *grouper_user
     command: ["crond", "-n"]
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
