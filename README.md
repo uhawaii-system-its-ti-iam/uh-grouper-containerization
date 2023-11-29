@@ -7,7 +7,7 @@ using Podman rather than Docker given that we are deploying to RHEL VMs.
 The portainer/stack.yml file defines the services that Portainer will deploy 
 and manage. The images must already be in the repository.
 
-Image deployment by Portainer is triggered by changing .gitlab-ci.yml. Be
+ Be
 sure to bump up the image file index deploy tag index by +1 here and in
 the stack.yml file.
 
@@ -23,14 +23,15 @@ the image names.  When changing Grouper versions, reset the DEPLOY_ID to 0.
 - portainer/stack.yml
 
 ## Triggering a Build
-
-Any commits that are pushed to the project on GitLab will trigger a build.
+Any commits that are pushed to the project's main branch on GitLab will trigger
+a build.
 
 ## Triggering a Deploy
-A) Two files must be changed. 
+Image deployment by Portainer is triggered by pushing a change 
+portainer/stack.yml to the project's main branch. Be sure that deployID is set
+correctly across before pushing to main.
 
-Note that Portainer also needs to reference the appropriate project branch (main 
-for the Dev environment).
+A) Two files must be changed. 
 
 **.gitlab-ci.yml** - increment the DEPLOY_ID value (8 to 9 below)
 Example:
@@ -40,7 +41,7 @@ Example:
 Example:
     &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.1.6-8
 
-B) Commit/push to origin the above changes to trigger a build and deploy.
+B) Commit/push to origin/main the changes to trigger a build and deploy.
 
 Requires the Portainer webhooks to be set up properly.
 
