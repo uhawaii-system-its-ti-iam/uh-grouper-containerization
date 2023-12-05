@@ -51,4 +51,4 @@ When deploying Grouper the various environments, a few configuration changes
 will be needed:
 
 - stack.yml
-  - database and PAC4J settings will need to be changed.
+  - no changes required at this time. Environmental variables were moved to Portainer.
