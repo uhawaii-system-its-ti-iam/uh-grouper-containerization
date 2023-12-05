@@ -1,4 +1,4 @@
-# logrorate/Dockerfile - configure the logrotate image
+# logrotate/Dockerfile - configure the logrotate image
 #
 # Features include daily log rotation and email to the IAM team.
 #
@@ -22,7 +22,7 @@ ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 RUN echo "Grouper home: $GROUPER_HOME"
 
 # Augment the minimal Rocky Linux OS.
-RUN yum update -y && yum install -y mailx logrotate cronie
+RUN yum update -y && yum install -y mailx logrotate gzip cronie
 
 # Set up the home directory.
 RUN mkdir -p ${GROUPER_HOME}

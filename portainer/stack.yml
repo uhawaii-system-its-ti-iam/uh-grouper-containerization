@@ -21,16 +21,20 @@ services:
       GROUPER_AUTO_DDL_UPTOVERSION: V4.*.*
       GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES: 0.0.0.0/32
       PAC4J_ENABLED: true
-      PAC4J_GROUPERCONTEXTURL: https://grouper-dev.its.hawaii.edu/grouper
+      PAC4J_GROUPERCONTEXTURL: ${PAC4J_GROUPERCONTEXTURL}
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
     ## BUMP 1 - bump the index here and in gitlab-ci.yml
     #           Update build.args & .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-101
-    restart: unless-stopped
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-102
     command: ui
     ports:
       - "8443:8443"
     user: &grouper_user root
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 10m
+        max-file: "3"
     volumes: &grouper_volumes
       - tls-keypairs:/opt/keypairs:ro
       - /home/grouper/grouper/logs:/opt/grouper/logs
@@ -39,7 +43,6 @@ services:
     environment:
       <<: *grouper_environment
     image: *grouper_image
-    restart: unless-stopped
     command: ws
     ports:
       - "9443:8443"
@@ -50,15 +53,15 @@ services:
     environment:
       <<: *grouper_environment
     image: *grouper_image
-    restart: unless-stopped
     command: daemon
     user: *grouper_user
     volumes:
       *grouper_volumes
   logrotate:
+    environment:
+      UH_DEPLOYMENT_CONTEXT: ${UH_DEPLOYMENT_CONTEXT}
     ## BUMP 2 - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-101
-    restart: unless-stopped
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-102
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:
