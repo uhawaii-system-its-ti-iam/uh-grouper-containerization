@@ -27,7 +27,7 @@ services:
       CONTAINER_SERVICE_ACCT_GID: ${CONTAINER_SERVICE_ACCT_GID}
     ## BUMP 1 - bump the index here and in gitlab-ci.yml
     #           Update build.args & .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-104
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-105
     command: ui
     ports:
       - "8443:8443"
@@ -38,7 +38,7 @@ services:
         max-size: 10m
         max-file: "3"
     volumes: &grouper_volumes
-      - tls-keypairs:/opt/keypairs:ro
+      - grouper_tls-keypairs:/opt/keypairs:ro
       - /home/grouper/grouper/logs:/opt/grouper/logs
       - /home/grouper/grouper/logs:/opt/tomcat/logs
   ws:
@@ -63,10 +63,11 @@ services:
     environment:
       CONTAINER_STACK_CONTEXT: ${CONTAINER_STACK_CONTEXT}
     ## BUMP 2 - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-104
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-105
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
 volumes:
-  tls-keypairs:
+  grouper_tls-keypairs:
+    external: true
