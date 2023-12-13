@@ -26,7 +26,7 @@ ENV LOGROTATE_CRONJOB=/etc/cron.d/logrotate-cronjob
 RUN echo "Grouper home: $GROUPER_HOME"
 
 # Augment the minimal Rocky Linux OS.
-RUN yum update -y && yum install -y mailx logrotate gzip cronie
+RUN yum update -y && yum install -y mailx logrotate gzip cronie ncompress
 
 # Set up the home directory.
 RUN mkdir -p ${GROUPER_HOME}
