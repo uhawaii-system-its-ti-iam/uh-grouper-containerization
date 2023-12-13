@@ -16,18 +16,18 @@ services:
       GROUPER_MORPHSTRING_ENCRYPT_KEY: ${GROUPER_MORPHSTRING_ENCRYPT_KEY}
       GROUPER_RUN_TOMCAT_NOT_SUPERVISOR: true
       GROUPER_LOG_TO_HOST: true
-      RUN_SHIB_SP: false
+      GROUPER_RUN_SHIB_SP: false
       GROUPER_UI_GROUPER_AUTH: false
       GROUPER_AUTO_DDL_UPTOVERSION: V4.*.*
       GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES: 0.0.0.0/32
+      GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: ${PAC4J_GROUPERCONTEXTURL}
-      GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
       # Additional settings.
       CONTAINER_HOST_DOMAIN: ${CONTAINER_HOST_DOMAIN}
     ## BUMP 1 - bump the index here and in gitlab-ci.yml
     #           Update build.args & .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-118
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-119
     command: ui
     ports:
       - "8443:8443"
@@ -63,7 +63,7 @@ services:
     environment:
       CONTAINER_HOST_DOMAIN: ${CONTAINER_HOST_DOMAIN}
     ## BUMP 2 - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-118
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-119
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:

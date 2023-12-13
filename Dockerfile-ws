@@ -6,7 +6,7 @@ COPY /src/main/docker/slashRoot/ /
 
 RUN chown tomcat /opt/tomcat/bin/self-signed-cert.sh
 
-ENV GROUPER_RUN_TOMCAT_NOT_SUPERVISOR="true"
-ENV RUN_SHIB_SP="false"
+#ENV GROUPER_RUN_TOMCAT_NOT_SUPERVISOR="true"
+#ENV GROUPER_RUN_SHIB_SP="false"
 
 CMD ws
