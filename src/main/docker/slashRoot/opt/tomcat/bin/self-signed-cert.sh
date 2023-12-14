@@ -13,6 +13,6 @@ CERT_DIR="/opt/grouper/certs/client"
 echo "Begin self-signed cert script."
 
 openssl req -x509 -newkey rsa:4096 -keyout $CERT_DIR/cert.key -out $CERT_DIR/cert.pem -sha256 -days 7332 -nodes -subj "${SUBJECT}"
-openssl x509 -in cert.pem -text -noout
+openssl x509 -in $CERT_DIR/cert.pem -text -noout
 
 echo "Exit self-signed cert script."

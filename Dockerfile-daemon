@@ -7,5 +7,3 @@ COPY /src/main/docker/slashRoot/ /
 RUN chown tomcat /opt/tomcat/bin/self-signed-cert.sh
 
 ENV GROUPER_UI_GROUPER_AUTH="true"
-
-#CMD daemon
