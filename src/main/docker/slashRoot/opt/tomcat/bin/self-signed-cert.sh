@@ -5,7 +5,8 @@
 # the Grouper services.
 
 # The host domain is defined in the Portainer stack.
-SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${DEPLOYMENT_CN}"
+#SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${DEPLOYMENT_CN}"
+SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
 
 # Per Grouper specification.
 CERT_DIR="/opt/grouper/certs/client"
