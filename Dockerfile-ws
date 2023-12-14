@@ -6,4 +6,4 @@ COPY /src/main/docker/slashRoot/ /
 
 RUN chown tomcat /opt/tomcat/bin/self-signed-cert.sh
 
-CMD ws
+#CMD ws
