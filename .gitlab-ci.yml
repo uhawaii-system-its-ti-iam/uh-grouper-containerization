@@ -12,9 +12,11 @@ build-job:
   stage: build
   variables:
     # Bump the build id here and in stack.yml to trigger a new deployment.
-    BUILD_ID: 128
+    BUILD_ID: 129
     # Update build.args & stack.yml for Grouper version changes.
     GROUPER_VERSION: 4.2.0
+    # Update the Deployment CN for each environment.
+    DEPLOYMENT_CN: idp-future-dev.its.hawaii.edu
     # Also update build.gradle & portainer/stack.yml if the image name changes.
     GROUPER_IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     GROUPER_IMAGE_TAG: $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
@@ -27,7 +29,8 @@ build-job:
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo $CI_COMMIT_TIMESTAMP
-    - buildah bud --build-arg-file=build.args -t $GROUPER_IMAGE_TAG .
+    #    - buildah bud --build-arg-file=build.args -t $GROUPER_IMAGE_TAG .
+    - buildah bud --build-arg $GROUPER_VERSION --build-arg DEPLOYMENT_CN -t $GROUPER_IMAGE_TAG .
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-latest
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_BUILD_ID
     - buildah push --tls-verify=false $GROUPER_IMAGE_TAG

@@ -5,12 +5,12 @@
 # the Grouper services.
 
 # The host domain is defined in the Portainer stack.
-SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${CONTAINER_HOST_DOMAIN}"
+SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${DEPLOYMENT_CN}"
 
 # Per Grouper specification.
 CERT_DIR="/opt/grouper/certs/client"
 
-echo "Begin self-signed cert script. CN=${CONTAINER_HOST_DOMAIN}"
+echo "Begin self-signed cert script. CN=${DEPLOYMENT_CN}"
 
 openssl req -x509 -newkey rsa:4096 -keyout $CERT_DIR/cert.key -out $CERT_DIR/cert.pem -sha256 -days 7332 -nodes -subj "${SUBJECT}"
 openssl x509 -in $CERT_DIR/cert.pem -text -noout
