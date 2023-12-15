@@ -5,7 +5,7 @@ FROM docker.io/i2incommon/grouper:${GROUPER_VERSION} as install
 
 COPY /src/main/docker/slashRoot/ /
 
-ENV DEPLOYMENT_CN=$DEPLOYMENT_CN
+ENV DEPLOYMENT_CN=${DEPLOYMENT_CN}
 
 RUN echo "1 DEPLOYMENT_CN value is: $DEPLOYMENT_CN"
 RUN echo "2 DEPLOYMENT_CN value is: ${DEPLOYMENT_CN}"
