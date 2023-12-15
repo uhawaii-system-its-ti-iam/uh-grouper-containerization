@@ -8,6 +8,7 @@
 
 echo "3 DEPLOYMENT_CN value is: $DEPLOYMENT_CN"
 echo "4 DEPLOYMENT_CN value is: ${DEPLOYMENT_CN}"
+printenv
 
 # The host domain is defined in the Portainer stack.
 #SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${DEPLOYMENT_CN}"
