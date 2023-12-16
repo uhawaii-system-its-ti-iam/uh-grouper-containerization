@@ -12,7 +12,7 @@ build-job:
   stage: build
   variables:
     # Bump the build id here and in stack.yml to trigger a new deployment.
-    BUILD_ID: 143
+    BUILD_ID: 144
     # Update stack.yml for Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Update the Deployment CN for each environment.
@@ -28,11 +28,11 @@ build-job:
     LOGROTATE_LATEST: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:latest
     LOGROTATE_BUILD_ID: $LOGROTATE_IMAGE-$BUILD_ID
   script:
-    - echo "DEPLOYMENT_CN: $DEPLOYMENT_CN"
+    - export DEPLOYMENT_CN=$DEPLOYMENT_CN
+    - echo $DEPLOYMENT_C
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo $CI_COMMIT_TIMESTAMP
 #    - buildah bud --build-arg GROUPER_VERSION=$GROUPER_VERSION --build-arg DEPLOYMENT_CN=$GROUPER_DEPLOYMENT_CN -t $GROUPER_IMAGE_TAG .
-    - export DEPLOYMENT_CN=$DEPLOYMENT_CN
     - buildah bud --build-arg GROUPER_VERSION=$GROUPER_VERSION --build-arg DEPLOYMENT_CN=$DEPLOYMENT_CN -t $GROUPER_IMAGE_TAG .
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-latest
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_BUILD_ID
