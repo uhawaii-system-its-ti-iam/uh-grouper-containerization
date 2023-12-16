@@ -3,11 +3,9 @@ ARG DEPLOYMENT_CN
 
 FROM docker.io/i2incommon/grouper:${GROUPER_VERSION} as install
 
-ENV DEPLOYMENT_CN=${DEPLOYMENT_CN}
+#ENV DEPLOYMENT_CN=${DEPLOYMENT_CN}
 
 COPY /src/main/docker/slashRoot/ /
-
-RUN echo "2 DEPLOYMENT_CN value is: ${DEPLOYMENT_CN}"
 
 # Debug
 RUN printenv
