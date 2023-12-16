@@ -6,8 +6,7 @@
 # For the chmod that makes this file executable see the Dockerfile for each of
 # the Grouper services.
 
-echo "3 DEPLOYMENT_CN value is: $DEPLOYMENT_CN"
-echo "4 DEPLOYMENT_CN value is: ${DEPLOYMENT_CN}"
+# Debug
 printenv
 
 # The host domain is defined in the Portainer stack.
