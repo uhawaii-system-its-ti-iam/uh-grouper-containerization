@@ -12,7 +12,7 @@ build-job:
   stage: build
   variables:
     # Bump the build id here and in stack.yml to trigger a new deployment.
-    BUILD_ID: 148
+    BUILD_ID: 149
     # Update stack.yml for Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Update the Deployment CN for each environment.

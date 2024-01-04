@@ -3,7 +3,8 @@ ARG DEPLOYMENT_CN
 
 FROM docker.io/i2incommon/grouper:${GROUPER_VERSION} as install
 
-#ENV DEPLOYMENT_CN=${DEPLOYMENT_CN}
+ENV DEPLOYMENT_CN=$DEPLOYMENT_CN
+RUN echo $DEPLOYMENT_CN
 
 COPY /src/main/docker/slashRoot/ /
 
