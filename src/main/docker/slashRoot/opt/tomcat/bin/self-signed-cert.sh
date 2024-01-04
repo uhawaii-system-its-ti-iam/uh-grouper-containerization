@@ -10,13 +10,13 @@
 printenv
 
 # The host domain is defined in the Portainer stack.
-#SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${DEPLOYMENT_CN}"
-SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
+#CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${CERT_SUBJECT_CN}"
+CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
 
 echo "RUN opt/tomcat/bin/self-signed-cert.sh"
 
 sudo openssl req -new -x509 -sha256 -newkey rsa:4096 -nodes -keyout /etc/pki/tls/private/cert.key \
                  -days 7332 -out /etc/pki/tls/certs/cert.pem \
-                 -subj "${SUBJECT}"
+                 -subj "${CERT_SUBJECT}"
 
 echo "Exit opt/tomcat/bin/self-signed-cert.sh - status: ${?}"

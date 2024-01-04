@@ -3,12 +3,12 @@ ARG DEPLOYMENT_CN
 
 FROM docker.io/i2incommon/grouper:${GROUPER_VERSION} as install
 
-ENV DEPLOYMENT_CN=$DEPLOYMENT_CN
-RUN echo $DEPLOYMENT_CN
-
 COPY /src/main/docker/slashRoot/ /
 
+ENV CERT_SUBJECT_CN=$DEPLOYMENT_CN
+
 # Debug
+RUN echo $CERT_SUBJECT_CN
 RUN printenv
 
 RUN chown tomcat /opt/tomcat/bin/self-signed-cert.sh
