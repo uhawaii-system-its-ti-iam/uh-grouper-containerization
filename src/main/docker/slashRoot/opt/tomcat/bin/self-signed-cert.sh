@@ -6,23 +6,21 @@
 # For the chmod that makes this file executable see the Dockerfile for each of
 # the Grouper services.
 
-# Debug
 echo "Enter opt/tomcat/bin/self-signed-cert.sh"
-
 echo "Environment: ${ENV}"
+
 if [ "$ENV" = "dev" ]; then
-    CERT_SUBJECT_TEST="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
+    CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
 elif [ "$ENV" = "prod" ]; then
-    CERT_SUBJECT_TEST="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-test.its.hawaii.edu"
+    CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-test.its.hawaii.edu"
 else
-    echo "The value of ENV is not {$ENV} is not expected - status: 1"
+    echo "The value of ENV is not {$ENV} is not expected"
+    echo "Exit opt/tomcat/bin/self-signed-cert.sh - status: 1"
     #exit 1
 fi
 
-# Debug
-echo $CERT_SUBJECT_TEST
-printenv
-CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
+echo "Derived subject: ${CERT_SUBJECT}"
+#CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
 
 echo "RUN opt/tomcat/bin/self-signed-cert.sh"
 
