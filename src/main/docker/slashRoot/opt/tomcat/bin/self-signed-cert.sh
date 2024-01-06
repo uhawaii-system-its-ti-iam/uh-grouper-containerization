@@ -7,10 +7,20 @@
 # the Grouper services.
 
 # Debug
-printenv
+echo "Enter opt/tomcat/bin/self-signed-cert.sh"
 
-# The host domain is defined in the Portainer stack.
-#CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=${CERT_SUBJECT_CN}"
+echo "Environment: ${ENV}"
+if [ "$ENV" = "dev" ]; then
+    CERT_SUBJECT_TEST="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
+elif [ "$ENV" = "prod" ]; then
+    CERT_SUBJECT_TEST="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-test.its.hawaii.edu"
+else
+    echo "The value of ENV is not {$ENV} is not expected - status: 1"
+    #exit 1
+fi
+
+# Debug
+printenv
 CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
 
 echo "RUN opt/tomcat/bin/self-signed-cert.sh"

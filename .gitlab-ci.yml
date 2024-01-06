@@ -12,16 +12,14 @@ build-job:
   stage: build
   variables:
     # Bump the build id here and in stack.yml to trigger a new deployment.
-    BUILD_ID: 151
+    BUILD_ID: 152
     # Update stack.yml for Grouper version changes.
     GROUPER_VERSION: 4.2.0
-    # Update the Deployment CN for each environment.
-    DEPLOYMENT_CN: "idp-future-dev.its.hawaii.edu"
     # Also update portainer/stack.yml if the image name changes.
     GROUPER_IMAGE_NAME: $CI_REGISTRY:5001/iam/uh-grouper/grouper:$GROUPER_VERSION
     GROUPER_IMAGE_TAG: $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA
     GROUPER_BUILD_ID: $GROUPER_IMAGE_NAME-$BUILD_ID
-    ## logrotate ##
+    # logrotate #
     LINUX_IMAGE: quay.io/rockylinux/rockylinux:latest
     LOGROTATE_IMAGE: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:1.0.0
     LOGROTATE_LATEST: $CI_REGISTRY:5001/iam/uh-grouper/logrotate-grouper:latest
@@ -29,9 +27,7 @@ build-job:
   script:
     - buildah login --tls-verify=false -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY:5001
     - echo "Build '${BUILD_ID}' begun at ${CI_COMMIT_TIMESTAMP}"
-    - echo $CI_COMMIT_TIMESTAMP
-    - echo $DEPLOYMENT_CN
-    - buildah bud --build-arg GROUPER_VERSION=$GROUPER_VERSION --build-arg DEPLOYMENT_CN=$DEPLOYMENT_CN -t $GROUPER_IMAGE_TAG .
+    - buildah bud --build-arg GROUPER_VERSION=$GROUPER_VERSION -t $GROUPER_IMAGE_TAG .
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_IMAGE_NAME-$CI_COMMIT_BRANCH-latest
     - buildah tag $GROUPER_IMAGE_TAG $GROUPER_BUILD_ID
     - buildah push --tls-verify=false $GROUPER_IMAGE_TAG

@@ -7,13 +7,12 @@ and a Portainer webhook triggers stack deployment.
 Stack features:
  - Grouper images
  - Logrotate image
- - Rootless deployment
+ - Rootless deployment (future)
 
 # Upgrading Grouper
 The following files need to be updated. When changing Grouper versions, reset 
 the build id suffix to 0.
 
-- build.args
 - .gitlab-ci.yml
 - portainer/stack.yml
 
