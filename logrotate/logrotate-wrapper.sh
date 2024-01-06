@@ -15,12 +15,11 @@ LOG_DIR=${HOME}/grouper/logs
 cd ${LOG_DIR}
 
 # Debugging invocation (uncomment).
-#
 #${LOGROTATE} -d -s ${LOGROTATE_STATUS} ${LOGROTATE_CONF}
+#printenv
 #exit 0
 
 # Standard invocation.
-#
 ${LOGROTATE} -s ${LOGROTATE_STATUS} ${LOGROTATE_CONF} >/dev/null 2>&1
 
 # Verbose invocation.

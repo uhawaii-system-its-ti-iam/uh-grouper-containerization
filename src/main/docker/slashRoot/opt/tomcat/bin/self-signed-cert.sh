@@ -6,6 +6,10 @@
 # For the chmod that makes this file executable see the Dockerfile for each of
 # the Grouper services.
 
+echo "---"
+printenv
+echo "---"
+
 echo "Enter opt/tomcat/bin/self-signed-cert.sh"
 echo "Environment: ${ENV}"
 

@@ -6,7 +6,6 @@
 # $ ps aux | grep cron
 
 ARG LOGROTATE_IMAGE
-ARG CONTAINER_STACK_CONTEXT
 
 # Start a new image build based on an existing image.
 FROM ${LOGROTATE_IMAGE}
@@ -15,9 +14,6 @@ FROM ${LOGROTATE_IMAGE}
 ENV GROUPER_USER=root
 ENV GROUPER_HOME=/home/grouper
 ENV GROUPER_LOGS=/opt/grouper/logs
-
-# Define the vars for the container OS.
-ENV CONTAINER_STACK_CONTEXT=${CONTAINER_STACK_CONTEXT}
 
 ENV LOGROTATE_CONFIG=${GROUPER_HOME}/etc/logrotate.conf
 ENV LOGROTATE_WRAPPER=${GROUPER_HOME}/bin/logrotate-wrapper.sh
