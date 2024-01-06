@@ -20,6 +20,7 @@ else
 fi
 
 # Debug
+echo $CERT_SUBJECT_TEST
 printenv
 CERT_SUBJECT="/C=US/ST=Hawaii/O=University of Hawaii/CN=idp-future-dev.its.hawaii.edu"
 
