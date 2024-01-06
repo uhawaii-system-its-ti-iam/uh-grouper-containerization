@@ -30,8 +30,8 @@ services:
 
     ## BUMP 1 - bump the index here and in gitlab-ci.yml
     #           Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-156
-    command: opt/tomcat/bin/self-signed-cert.sh && ui
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-157
+    command: /opt/tomcat/bin/self-signed-cert.sh && ui
     ports:
       - "8443:8443"
     user: &grouper_user root
@@ -66,7 +66,7 @@ services:
     environment:
       CONTAINER_HOST_DOMAIN: ${CONTAINER_HOST_DOMAIN}
     ## BUMP 2 - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-156
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-157
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:
