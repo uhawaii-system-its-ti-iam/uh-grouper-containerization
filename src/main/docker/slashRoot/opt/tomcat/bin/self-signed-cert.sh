@@ -28,8 +28,10 @@ echo "Derived subject: ${CERT_SUBJECT}"
 
 echo "RUN opt/tomcat/bin/self-signed-cert.sh"
 
-sudo openssl req -new -x509 -sha256 -newkey rsa:4096 -nodes -keyout /etc/pki/tls/private/cert.key \
+#sudo removed for testing purposes
+openssl req -new -x509 -sha256 -newkey rsa:4096 -nodes -keyout /etc/pki/tls/private/cert.key \
                  -days 7332 -out /etc/pki/tls/certs/cert.pem \
                  -subj "${CERT_SUBJECT}"
 
 echo "Exit opt/tomcat/bin/self-signed-cert.sh - status: ${?}"
+exit 0
