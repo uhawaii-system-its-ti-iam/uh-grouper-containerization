@@ -23,10 +23,10 @@ services:
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: ${PAC4J_GROUPERCONTEXTURL}
-      CERT_SUBJECT_TEST: ${CERT_SUBJECT_TEST}
+      CERT_SUBJECT_TEST: ${CONTAINER_CERT_SUBJECT}
     ## BUMP 1 - bump the index here and in gitlab-ci.yml
     #           Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-161
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-162
     command: sh -c '/opt/tomcat/bin/self-signed-cert.sh && ui'
     ports:
       - "8443:8443"
@@ -37,7 +37,6 @@ services:
         max-size: 10m
         max-file: "3"
     volumes: &grouper_volumes
-      - grouper_tls-keypairs:/opt/keypairs:ro
       - /home/grouper/grouper/logs:/opt/grouper/logs
       - /home/grouper/grouper/logs:/opt/tomcat/logs
   ws:
@@ -62,11 +61,8 @@ services:
     environment:
       CONTAINER_HOST_DOMAIN: ${CONTAINER_HOST_DOMAIN}
     ## BUMP 2 - bump the index
-    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-161
+    image: rep90.pvt.hawaii.edu:5001/iam/uh-grouper/logrotate-grouper:1.0.0-162
     user: *grouper_user
     command: ["crond", "-n"]
     volumes:
       - /home/grouper/grouper/logs:/opt/grouper/logs
-volumes:
-  grouper_tls-keypairs:
-    external: true
