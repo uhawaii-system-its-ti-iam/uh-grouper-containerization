@@ -6,7 +6,6 @@
 # For the chmod that makes this file executable see the Dockerfile for each of
 # the Grouper services.
 echo "Enter opt/tomcat/bin/self-signed-cert.sh"
-echo "CONTAINER_CERT_SUBJECT: ${CONTAINER_CERT_SUBJECT}"
 
 openssl req -new -x509 -sha256 -newkey rsa:4096 -nodes -keyout /etc/pki/tls/private/cert.key \
                  -days 7332 -out /etc/pki/tls/certs/cert.pem \
