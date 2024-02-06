@@ -12,7 +12,7 @@ build-job:
   stage: build
   variables:
     # Bump the build id here and in stack.yml to trigger a new deployment.
-    BUILD_ID: 215
+    BUILD_ID: 216
     # Update stack.yml for Grouper version changes.
     GROUPER_VERSION: 4.2.0
     # Also update portainer/stack.yml if the image name changes.
