@@ -14,7 +14,7 @@
         </Console>
 
         <RollingFile name="file_catalina" fileName="/opt/grouper/logs/catalina.out"
-                     filePattern="/opt/grouper/logs/catalina.out.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/catalina.out.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}catalina.out;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -22,7 +22,7 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
         <RollingFile name="file_grouper_error" fileName="/opt/grouper/logs/grouper.log"
-                     filePattern="/opt/grouper/logs/grouper.log.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/grouper.log.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}grouper_error.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -30,7 +30,7 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
         <RollingFile name="file_grouper_daemon" fileName="/opt/grouper/logs/grouperDaemon.log"
-                     filePattern="/opt/grouper/logs/grouperDaemon.log.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/grouperDaemon.log.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}grouperDaemon.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -38,7 +38,7 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
         <RollingFile name="file_grouper_pspng" fileName="/opt/grouper/logs/pspng.log"
-                     filePattern="/opt/grouper/logs/pspng.log.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/pspng.log.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}pspng.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -46,7 +46,7 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
         <RollingFile name="file_grouper_provisioning" fileName="/opt/grouper/logs/provisioning.log"
-                     filePattern="/opt/grouper/logs/provisioning.log.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/provisioning.log.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}provisioning.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -54,7 +54,7 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
         <RollingFile name="file_grouper_ws" fileName="/opt/grouper/logs/grouper_ws.log"
-                     filePattern="/opt/grouper/logs/grouper_ws.log.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/grouper_ws.log.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}grouper_ws.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
@@ -62,7 +62,7 @@
             <DefaultRolloverStrategy max="${retentionpolicy01}"/>
         </RollingFile>
         <RollingFile name="file_grouper_ws_longRunning" fileName="/opt/grouper/logs/grouper_ws_longRunning.log"
-                     filePattern="/opt/grouper/logs/grouper_ws_longRunning.log.%d{yyyy-MM-dd}">
+                     filePattern="/opt/grouper/logs/grouper_ws_longRunning.log.%d{yyyy-MM-dd}.gz">
             <PatternLayout pattern="${grouplogprefix}grouper_ws_longRunning.log;${env}${usertoken}${layout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1"/>
