@@ -1,6 +1,6 @@
 # portainer/stack.yml - Portainer container deployment instructions
 #
-# To deploy: see the 2 BUMP sections below for triggering new deployments.
+# To deploy: see the BUMP section below for triggering new deployments.
 #            For example, bump ...grouper:4.2.0-18 to ...19.
 #
 # Note: Docker Compose files (which Portainer utilizes for stacks) do not
@@ -19,16 +19,16 @@ services:
       GROUPER_RUN_SHIB_SP: false
       GROUPER_UI_GROUPER_AUTH: false
       GROUPER_AUTO_DDL_UPTOVERSION: V4.*.*
-      GROUPER_UI_CONFIGURATIONEDITOR_SOURCEIPADDRESSES: 0.0.0.0/32
+      GROUPER_UI_CONFIGURATIONEDITOR_SOURCEIPADDRESSES: 10.17.0.0/16
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
       PAC4J_ENABLED: true
       PAC4J_GROUPERCONTEXTURL: ${PAC4J_GROUPERCONTEXTURL}
       #PAC4J_CAS_LOGINURL: ${PAC4J_CAS_LOGINURL}
       PAC4J_CAS_LOGINURL: https://cas-test.its.hawaii.edu/cas/login
       CONTAINER_CERT_SUBJECT: ${CONTAINER_CERT_SUBJECT}
-    ## BUMP 1 - bump the index here and in gitlab-ci.yml
-    #           Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-227
+    ## BUMP - bump the index here and in gitlab-ci.yml
+    #         Update .gilab-ci.yml for Grouper version changes.
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-228
     command: /bin/bash -c '/opt/tomcat/bin/self-signed-cert.sh && ui'
     ports:
       - "8443:8443"
