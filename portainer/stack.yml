@@ -28,7 +28,7 @@ services:
       CONTAINER_CERT_SUBJECT: ${CONTAINER_CERT_SUBJECT}
     ## BUMP 1 - bump the index here and in gitlab-ci.yml
     #           Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-224
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-225
     command: /bin/bash -c '/opt/tomcat/bin/self-signed-cert.sh && ui'
     ports:
       - "8443:8443"
