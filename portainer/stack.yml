@@ -10,7 +10,7 @@ services:
   ui:
     ## BUMP - bump the index here and in gitlab-ci.yml
     #         Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-238
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-239
     environment: &grouper_environment
       # Grouper settings.
       GROUPER_DATABASE_URL: ${GROUPER_DATABASE_URL}
