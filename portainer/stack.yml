@@ -10,7 +10,7 @@ services:
   ui:
     ## BUMP - bump the index here and in gitlab-ci.yml
     #         Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-233
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-234
     environment: &grouper_environment
       # Grouper settings.
       GROUPER_DATABASE_URL: ${GROUPER_DATABASE_URL}
@@ -25,8 +25,8 @@ services:
       GROUPER_ENV: ${GROUPER_ENV}
       GROUPER_UI_URL: ${GROUPER_UI_URL}
       GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES: ${GROUPER_UI_CONFIGURATION_EDITOR_SOURCEIPADDRESSES}
+      CAS_LOGIN_URL: ${CAS_LOGIN_URL}
       GROUPER_TOMCAT_MAX_HEADER_COUNT: "-1"
-      PAC4J_ENABLED: true
       CONTAINER_CERT_SUBJECT: ${CONTAINER_CERT_SUBJECT}
     command: /bin/bash -c '/opt/tomcat/bin/self-signed-cert.sh && ui'
     ports:
