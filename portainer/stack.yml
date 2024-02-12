@@ -1,16 +1,13 @@
 # portainer/stack.yml - Portainer container deployment instructions
 #
 # To deploy: see the BUMP section below for triggering new deployments.
-#            For example, bump ...grouper:4.2.0-18 to ...19.
-#
-# Note: Docker Compose files (which Portainer utilizes for stacks) do not
-# natively support variable interpolation or substitution within image names.
-# YAML anchors don't work either.
+#            For example, bump ...grouper:4.2.0-18 to ...-19.
 services:
   ui:
-    ## BUMP - bump the index here and in gitlab-ci.yml
+
+    ## BUMP - bump the index here and in .gitlab-ci.yml
     #         Update .gilab-ci.yml for Grouper version changes.
-    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-242
+    image: &grouper_image rep90.pvt.hawaii.edu:5001/iam/uh-grouper/grouper:4.2.0-243
     environment: &grouper_environment
       # Grouper settings.
       GROUPER_DATABASE_URL: ${GROUPER_DATABASE_URL}
